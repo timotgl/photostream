@@ -1,8 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { MouseEvent } from 'react';
+import logo from '../../logo.svg';
 import './App.css';
 
-const App: React.FC = () => {
+type Props = {
+  showNextPhoto: () => void;
+};
+
+const App: React.FC<Props> = ({ showNextPhoto }) => {
+  const handleClick = (clickEvent: MouseEvent) => {
+    clickEvent.preventDefault();
+    showNextPhoto();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,11 +25,11 @@ const App: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          <button onClick={handleClick}>show next photo</button>
         </a>
       </header>
     </div>
   );
-}
+};
 
 export default App;
