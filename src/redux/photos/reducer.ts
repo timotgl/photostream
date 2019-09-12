@@ -1,11 +1,15 @@
 import actionTypes from '../actionTypes';
-import { ReduxAction } from '../types';
+import { AnyAction } from 'redux';
 
-const initialState = {
+type State = {
+  readonly currentIndex: number;
+};
+
+const initialState: State = {
   currentIndex: 0,
 };
 
-const photosReducer = (state = initialState, action: ReduxAction) => {
+const photosReducer = (state: State = initialState, action: AnyAction): State => {
   if (action.type === actionTypes.PHOTOS.SHOW_NEXT) {
     return {
       ...state,

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
-import { showNextPhoto } from '../../redux/photos/actions';
+import { showNextPhoto, fetchAlbum } from '../../redux/photos/actions';
 import App from './App';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  showNextPhoto: () => dispatch(showNextPhoto())
-});
+const mapDispatchToProps = {
+  showNextPhoto,
+  fetchAlbum,
+};
 
 export default connect(null, mapDispatchToProps)(App);

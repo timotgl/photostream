@@ -1,17 +1,13 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import logo from '../../logo.svg';
 import './App.css';
 
 type Props = {
   showNextPhoto: () => void;
+  fetchAlbum: () => void;
 };
 
-const App: React.FC<Props> = ({ showNextPhoto }) => {
-  const handleClick = (clickEvent: MouseEvent) => {
-    clickEvent.preventDefault();
-    showNextPhoto();
-  };
-
+const App: React.FC<Props> = ({ showNextPhoto, fetchAlbum }) => {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,14 +15,8 @@ const App: React.FC<Props> = ({ showNextPhoto }) => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <button onClick={handleClick}>show next photo</button>
-        </a>
+        <button onClick={fetchAlbum}>fetch album</button>
+        <button onClick={showNextPhoto}>show next photo</button>
       </header>
     </div>
   );
