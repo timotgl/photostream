@@ -5,7 +5,7 @@ import App from './App';
 
 const mapDispatchToProps = {
   showNextPhoto,
-  fetchAlbum,
+  fetchAlbum: () => fetchAlbum(2000),
 };
 
 export default connect(null, mapDispatchToProps)(App);
