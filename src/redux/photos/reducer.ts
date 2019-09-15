@@ -16,6 +16,13 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
     };
   }
 
+  if (action.type === actionTypes.PHOTOS.SHOW_PREVIOUS) {
+    return {
+      ...state,
+      currentIndex: state.currentIndex - 1,
+    };
+  }
+
   if (action.type === actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS) {
     return {
       ...state,

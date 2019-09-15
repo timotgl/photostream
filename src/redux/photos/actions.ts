@@ -10,6 +10,8 @@ const ALBUM_URL = 'http://localhost:3000/photos.json';
 
 export const showNextPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_NEXT });
 
+export const showPreviousPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_PREVIOUS });
+
 export const fetchAlbumRequest = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_REQUEST });
 
 export const fetchAlbumSuccess = (album: any): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS, payload: album });
