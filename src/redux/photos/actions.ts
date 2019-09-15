@@ -2,8 +2,11 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import actionTypes from '../actionTypes';
+import {isPhotoItem, PhotoItem} from './interfaces';
+import loadJsonFile from '../../utils/loadJsonFile';
 
-const sleep = (delay: number) => new Promise((resolve) => window.setTimeout(() => resolve(['photo1', 'photo2']), delay));
+// TODO should work with 'https://timotaglieber.de/photos/photos.json' later (CORS)
+const ALBUM_URL = 'http://localhost:3000/photos.json';
 
 export const showNextPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_NEXT });
 
@@ -11,7 +14,7 @@ export const fetchAlbumRequest = (): AnyAction => ({ type: actionTypes.PHOTOS.FE
 
 export const fetchAlbumSuccess = (album: any): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS, payload: album });
 
-export const fetchAlbumFailure = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_REQUEST });
+export const fetchAlbumFailure = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_FAILURE });
 
 /*
  * ThunkAction<R, S, E A>
@@ -47,13 +50,17 @@ type FetchAlbumThunkDispatchType = ThunkDispatch<{}, {}, AnyAction>;
  *
  * Thunks are functions that return a promise.
  */
-export const fetchAlbum = (delay: number): FetchAlbumReturnType => {
+export const fetchAlbum = (): FetchAlbumReturnType => {
   return async (dispatch: FetchAlbumThunkDispatchType): Promise<void> => {
     dispatch(fetchAlbumRequest());
 
     try {
-      const album = await sleep(delay);
-      dispatch(fetchAlbumSuccess(album));
+      const album = await loadJsonFile(ALBUM_URL) as Array<PhotoItem>;
+      if (album.every((item) => isPhotoItem(item))) {
+        dispatch(fetchAlbumSuccess(album));
+      } else {
+        dispatch(fetchAlbumFailure());
+      }
     } catch {
       dispatch(fetchAlbumFailure());
     }
