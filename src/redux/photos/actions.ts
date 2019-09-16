@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import actionTypes from '../actionTypes';
-import {isPhotoItem, PhotoItem} from './interfaces';
+import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
 
 // TODO should work with 'https://timotaglieber.de/photos/photos.json' later (CORS)
@@ -14,7 +14,10 @@ export const showPreviousPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SH
 
 export const fetchAlbumRequest = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_REQUEST });
 
-export const fetchAlbumSuccess = (album: any): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS, payload: album });
+export const fetchAlbumSuccess = (album: any): AnyAction => ({
+  type: actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS,
+  payload: album,
+});
 
 export const fetchAlbumFailure = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_FAILURE });
 
@@ -23,8 +26,8 @@ export const fetchAlbum = (): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
     dispatch(fetchAlbumRequest());
 
     try {
-      const album = await loadJsonFile(ALBUM_URL) as Array<PhotoItem>;
-      if (album.every((item) => isPhotoItem(item))) {
+      const album = (await loadJsonFile(ALBUM_URL)) as Array<PhotoItem>;
+      if (album.every(item => isPhotoItem(item))) {
         dispatch(fetchAlbumSuccess(album));
       } else {
         dispatch(fetchAlbumFailure());

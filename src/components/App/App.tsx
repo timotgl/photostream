@@ -16,9 +16,7 @@ const App: React.FC<Props> = ({ currentPhotoUrl, showNextPhoto, showPreviousPhot
       <button onClick={fetchAlbum}>fetch album</button>
       <button onClick={showNextPhoto}>show next photo</button>
       <button onClick={showPreviousPhoto}>show previous photo</button>
-      <p>
-        current photo url: {currentPhotoUrl}
-      </p>
+      <p>current photo url: {currentPhotoUrl}</p>
     </div>
   );
 };
