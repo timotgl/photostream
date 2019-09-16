@@ -1,8 +1,8 @@
 import React from 'react';
 
 import NavigationHelp from '../NavigationHelp/NavigationHelp';
-import Counter from '../Counter/Counter';
-import PhotoDetails from '../PhotoDetails/PhotoDetails';
+import Counter from '../Counter';
+import PhotoDetails from '../PhotoDetails';
 
 import './App.css';
 
@@ -13,24 +13,61 @@ interface Props {
   fetchAlbum: () => void;
 }
 
+interface StringToFunctionMap {
+  [key: string]: () => void;
+}
+
 class App extends React.PureComponent<Props> {
-  componentDidMount(): void {
-    this.props.fetchAlbum();
+  actionsForKeyDown: StringToFunctionMap = {};
+
+  constructor(props: Props) {
+    super(props);
+    const { showNextPhoto, showPreviousPhoto } = props;
+    this.actionsForKeyDown = {
+      ArrowRight: showPreviousPhoto,
+      ArrowLeft: showNextPhoto,
+      ArrowUp: showNextPhoto,
+      ArrowDown: showPreviousPhoto,
+    };
   }
 
+  componentDidMount(): void {
+    this.props.fetchAlbum();
+
+    // Arrow key navigation
+    document.addEventListener('keydown', this.onKeyDown);
+
+    // Mouse wheel navigation
+    document.addEventListener('mousewheel', this.onMouseWheel); // IE9, Chrome, Safari, Opera
+    document.addEventListener('DOMMouseScroll', this.onMouseWheel); // Firefox
+  }
+
+  onKeyDown = (keyDownEvent: KeyboardEvent): void => {
+    const { key } = keyDownEvent;
+    const action = this.actionsForKeyDown[key];
+    if (action) {
+      action();
+    }
+  };
+
+  onMouseWheel = (wheelEvent: Event): void => {
+    const delta = Math.max(-1, Math.min(1, (wheelEvent as WheelEvent).deltaY));
+    if (delta <= 0) {
+      this.props.showNextPhoto();
+    } else {
+      this.props.showPreviousPhoto();
+    }
+  };
+
   render(): React.ReactNode {
-    const { currentPhotoUrl, showNextPhoto, showPreviousPhoto, fetchAlbum } = this.props;
+    const { currentPhotoUrl } = this.props;
     const url = `https://timotaglieber.de/photos/photos/1920/${currentPhotoUrl || ''}`;
     const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
     return (
       <div className="App" style={style}>
         <NavigationHelp />
-        <Counter counter={1} />
-        <PhotoDetails file="test.jpg" title="testTitle" location="testLocation" date="testDate" />
-        <button onClick={fetchAlbum}>fetch album</button>
-        <button onClick={showNextPhoto}>show next photo</button>
-        <button onClick={showPreviousPhoto}>show previous photo</button>
-        <p>current photo url: {currentPhotoUrl}</p>
+        <Counter />
+        <PhotoDetails />
       </div>
     );
   }

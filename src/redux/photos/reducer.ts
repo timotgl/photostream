@@ -11,7 +11,7 @@ const initialState: State = {
 const photosReducer = (state: State = initialState, action: AnyAction): State => {
   let newIndex: number;
   if (action.type === actionTypes.PHOTOS.SHOW_NEXT) {
-    newIndex = state.currentIndex === state.items.length - 1 ? initialState.currentIndex : state.currentIndex + 1;
+    newIndex = state.currentIndex === initialState.currentIndex ? state.items.length - 1 : state.currentIndex - 1;
     return {
       ...state,
       currentIndex: newIndex,
@@ -19,7 +19,7 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
   }
 
   if (action.type === actionTypes.PHOTOS.SHOW_PREVIOUS) {
-    newIndex = state.currentIndex === initialState.currentIndex ? state.items.length - 1 : state.currentIndex - 1;
+    newIndex = state.currentIndex === state.items.length - 1 ? initialState.currentIndex : state.currentIndex + 1;
     return {
       ...state,
       currentIndex: newIndex,

@@ -3,8 +3,6 @@ import React from 'react';
 import './PhotoDetails.css';
 import { PhotoItem } from '../../redux/photos/interfaces';
 
-// TODO: show Loading image&hellip; instead of title while loading
-
 const PhotoDetails: React.FC<PhotoItem> = ({ title, location, date, caption }) => (
   <div id="PhotoDetails">
     <h1 id="title">{title}</h1>
