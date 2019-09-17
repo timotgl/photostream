@@ -6,7 +6,7 @@ import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
 
 // TODO should work with 'https://timotaglieber.de/photos/photos.json' later (CORS)
-const ALBUM_URL = 'http://localhost:3000/photos.json';
+const ALBUM_URL = 'http://localhost:3000/photos.json'; // 'http://172.20.10.2:3000/photos.json' for real device
 
 export const showNextPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_NEXT });
 
