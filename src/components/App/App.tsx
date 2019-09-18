@@ -177,7 +177,13 @@ class App extends React.PureComponent<Props, State> {
 
   render(): React.ReactNode {
     const { currentPhotoUrl } = this.props;
-    const url = `https://timotaglieber.de/photos/photos/1920/${currentPhotoUrl || ''}`;
+
+    let photoWidth = 1920;
+    if (window.screen.width * window.devicePixelRatio >= 3840) {
+      photoWidth = 3840;
+    }
+
+    const url = `photos/${photoWidth}/${currentPhotoUrl || ''}`;
     const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
 
     // TODO: use different fade out effect on NavigationHelp, it shouldn't be rendered at all.
