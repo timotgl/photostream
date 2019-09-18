@@ -1,11 +1,23 @@
 import actionTypes from '../actionTypes';
 import { AnyAction } from 'redux';
 
-import { State } from './interfaces';
+import { PhotoItem, State } from './interfaces';
 
 const initialState: State = {
   currentIndex: 0,
   items: [],
+};
+
+const findPhotoIndexForFile = (items: Array<PhotoItem>, file: string, currentIndex: number): number => {
+  let newIndex: number = currentIndex;
+  items.find((photo: PhotoItem, index: number) => {
+    if (photo.file === file) {
+      newIndex = index;
+      return true;
+    }
+    return false;
+  });
+  return newIndex;
 };
 
 const photosReducer = (state: State = initialState, action: AnyAction): State => {
@@ -27,9 +39,11 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
   }
 
   if (action.type === actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS) {
+    const { album, switchToPhoto } = action.payload;
     return {
       ...state,
-      items: action.payload,
+      currentIndex: findPhotoIndexForFile(album, switchToPhoto, state.currentIndex),
+      items: album,
     };
   }
 

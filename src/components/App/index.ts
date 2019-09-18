@@ -7,10 +7,12 @@ import { RootState } from '../../redux/interfaces';
 
 interface StateProps {
   currentPhotoUrl: string;
+  hash: string;
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
   currentPhotoUrl: getCurrentPhoto(state).file,
+  hash: state.router.location.hash.replace('#', ''),
 });
 
 const mapDispatchToProps = {

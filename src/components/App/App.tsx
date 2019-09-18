@@ -9,9 +9,10 @@ import './App.css';
 
 interface Props {
   currentPhotoUrl?: string;
+  hash: string;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
-  fetchAlbum: () => void;
+  fetchAlbum: (switchToPhoto: string) => void;
 }
 
 enum Direction {
@@ -54,7 +55,7 @@ class App extends React.PureComponent<Props, State> {
   }
 
   componentDidMount(): void {
-    this.props.fetchAlbum();
+    this.props.fetchAlbum(this.props.hash);
 
     // Arrow key navigation
     document.addEventListener('keydown', this.onKeyDown);
