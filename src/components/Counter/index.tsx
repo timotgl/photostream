@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { State } from '../../redux/photos/interfaces';
+import { RootState } from '../../redux/interfaces';
 import Counter from './Counter';
 
 export interface Props {
@@ -8,9 +8,9 @@ export interface Props {
   total: number;
 }
 
-const mapStateToProps = (state: State): Props => ({
-  counter: state.currentIndex + 1,
-  total: state.items.length,
+const mapStateToProps = (state: RootState): Props => ({
+  counter: state.photos.currentIndex + 1,
+  total: state.photos.items.length,
 });
 
 export default connect(mapStateToProps)(Counter);

@@ -1,4 +1,5 @@
-import { State, PhotoItem } from './interfaces';
+import { RootState } from '../interfaces';
+import { PhotoItem } from './interfaces';
 
 const defaultPhotoItem: PhotoItem = {
   file: '',
@@ -8,7 +9,7 @@ const defaultPhotoItem: PhotoItem = {
   caption: '',
 };
 
-export const getCurrentPhoto = (state: State): PhotoItem => {
-  const { items, currentIndex } = state;
+export const getCurrentPhoto = (state: RootState): PhotoItem => {
+  const { items, currentIndex } = state.photos;
   return items.length ? items[currentIndex] : defaultPhotoItem;
 };
