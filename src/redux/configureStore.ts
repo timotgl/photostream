@@ -8,23 +8,11 @@ import createRootReducer from './rootReducer';
 
 export const history: History = createBrowserHistory();
 
-const configureStore = (): Store => {
-  /*
-  if (process.env.NODE_ENV !== 'production') {
-    middleware = composeWithDevTools(middleware);
-  }
-  */
-
-  return createStore(
-    createRootReducer(history), // root reducer with router state
+const configureStore = (): Store =>
+  createStore(
+    createRootReducer(history),
     {}, // preloadedState
-    composeWithDevTools(
-      applyMiddleware(
-        routerMiddleware(history), // for dispatching history actions
-        thunkMiddleware,
-      ),
-    ),
+    composeWithDevTools(applyMiddleware(routerMiddleware(history), thunkMiddleware)),
   );
-};
 
 export default configureStore;
