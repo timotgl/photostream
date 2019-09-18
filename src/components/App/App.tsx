@@ -68,6 +68,9 @@ class App extends React.PureComponent<Props, State> {
     document.addEventListener('touchmove', whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping)));
     document.addEventListener('touchend', this.onTouchEnd);
     document.addEventListener('touchcancel', this.resetSwiping);
+
+    // Click navigation
+    document.addEventListener('click', this.onClick);
   }
 
   onKeyDown = (keyDownEvent: KeyboardEvent): void => {
@@ -160,6 +163,15 @@ class App extends React.PureComponent<Props, State> {
     this.setState(initialState, () => {
       document.body.style['opacity'] = this.state.swipeOpacity.toString();
     });
+  };
+
+  onClick = (event: Event): void => {
+    const isInLeftHalf: boolean = window.innerWidth / 2 > (event as MouseEvent).clientX;
+    if (isInLeftHalf) {
+      this.props.showNextPhoto();
+    } else {
+      this.props.showPreviousPhoto();
+    }
   };
 
   render(): React.ReactNode {
