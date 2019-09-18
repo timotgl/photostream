@@ -1,16 +1,34 @@
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { push, CallHistoryMethodAction } from 'connected-react-router';
 
 import actionTypes from '../actionTypes';
+import { RootState } from '../interfaces';
 import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
+import { getCurrentPhoto } from './selectors';
 
 // TODO should work with 'https://timotaglieber.de/photos/photos.json' later (CORS)
 const ALBUM_URL = 'http://localhost:3000/photos.json'; // 'http://172.20.10.2:3000/photos.json' for real device
 
-export const showNextPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_NEXT });
+const pushCurrentPhotoHashUrl = (getState: () => RootState): CallHistoryMethodAction => {
+  const currentPhoto = getCurrentPhoto(getState());
+  return push(`#${currentPhoto.file}`);
+};
 
-export const showPreviousPhoto = (): AnyAction => ({ type: actionTypes.PHOTOS.SHOW_PREVIOUS });
+export const showNextPhoto = (): ThunkAction<Promise<void>, RootState, {}, AnyAction> => {
+  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: () => RootState): Promise<void> => {
+    dispatch({ type: actionTypes.PHOTOS.SHOW_NEXT });
+    dispatch(pushCurrentPhotoHashUrl(getState));
+  };
+};
+
+export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, {}, AnyAction> => {
+  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: () => RootState): Promise<void> => {
+    dispatch({ type: actionTypes.PHOTOS.SHOW_PREVIOUS });
+    dispatch(pushCurrentPhotoHashUrl(getState));
+  };
+};
 
 export const fetchAlbumRequest = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_REQUEST });
 
