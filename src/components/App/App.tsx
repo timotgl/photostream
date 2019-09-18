@@ -98,65 +98,72 @@ class App extends React.PureComponent<Props, State> {
     });
   };
 
+  updateSwipingState = (clientX: number): void =>
+    this.setState(
+      {
+        swipeX: clientX,
+        swipeOpacity: this.state.swipeOpacity - 0.05,
+      },
+      () => {
+        document.body.style['opacity'] = String(this.state.swipeOpacity);
+      },
+    );
+
+  onSwipeStart = (clientX: number): void => {
+    if (clientX > this.state.swipeX) {
+      // Swiping to the right has just started
+      this.setState({ swipeDir: Direction.Right });
+    } else if (clientX < this.state.swipeX) {
+      // Swiping to the left has just started
+      this.setState({ swipeDir: Direction.Left });
+    }
+    this.setState({ swipeX: clientX });
+  };
+
+  onSwipeRight = (clientX: number): void => {
+    if (clientX > this.state.swipeX) {
+      // Swiping to the right continues
+      this.updateSwipingState(clientX);
+    } else if (clientX < this.state.swipeX) {
+      // Direction has changed to left, abort
+      this.resetSwiping();
+    }
+  };
+
+  onSwipeLeft = (clientX: number): void=> {
+    if (clientX < this.state.swipeX) {
+      // Swiping to the left continues
+      this.updateSwipingState(clientX);
+    } else if (clientX > this.state.swipeX) {
+      // Direction has changed to right, abort
+      this.resetSwiping();
+    }
+  };
+
   onTouchMove = (touch: Touch): void => {
-    const swipeX = touch.clientX;
+    const { clientX } = touch;
 
-    if (this.state.swipeDir === Direction.Start) {
-      if (swipeX > this.state.swipeX) {
-        this.setState({ swipeDir: Direction.Right });
-      } else if (swipeX < this.state.swipeX) {
-        this.setState({ swipeDir: Direction.Left });
-      }
-      this.setState({ swipeX });
-      return;
-    }
-
-    if (this.state.swipeDir === Direction.Right) {
-      if (swipeX > this.state.swipeX) {
-        // Swiping to the right continues
-        this.setState(
-          {
-            swipeX,
-            swipeOpacity: this.state.swipeOpacity - 0.05,
-          },
-          () => {
-            document.body.style['opacity'] = String(this.state.swipeOpacity);
-          },
-        );
-        return;
-      } else if (swipeX < this.state.swipeX) {
-        // Direction has changed to left, abort
-        this.resetSwiping();
-        return;
-      }
-    }
-
-    if (this.state.swipeDir === Direction.Left) {
-      if (swipeX < this.state.swipeX) {
-        // Swiping to the left continues
-        this.setState(
-          {
-            swipeX,
-            swipeOpacity: this.state.swipeOpacity - 0.05,
-          },
-          () => {
-            document.body.style['opacity'] = String(this.state.swipeOpacity);
-          },
-        );
-      } else if (swipeX > this.state.swipeX) {
-        // Direction has changed to right, abort
-        this.resetSwiping();
-      }
+    switch (this.state.swipeDir) {
+      case Direction.Start:
+        this.onSwipeStart(clientX);
+        break;
+      case Direction.Right:
+        this.onSwipeRight(clientX);
+        break;
+      case Direction.Left:
+        this.onSwipeLeft(clientX);
     }
   };
 
   onTouchEnd = (): void => {
-    if (this.state.swipeDir === Direction.Right) {
-      this.resetSwiping();
-      this.props.showNextPhoto();
-    } else if (this.state.swipeDir === Direction.Left) {
-      this.resetSwiping();
-      this.props.showPreviousPhoto();
+    switch (this.state.swipeDir) {
+      case Direction.Right:
+        this.resetSwiping();
+        this.props.showNextPhoto();
+        break;
+      case Direction.Left:
+        this.resetSwiping();
+        this.props.showPreviousPhoto();
     }
   };
 
