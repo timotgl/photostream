@@ -6,16 +6,6 @@
   align-items: center; /* align vertical */
   text-align: center;
   background-color: rgba(50, 50, 50, 0.8);
-  animation: cssAnimation 0s ease-in 3s forwards;
-  animation-fill-mode: forwards;
-}
-
-@keyframes cssAnimation {
-  to {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
 }
 
 #navigationHelp h1 {

@@ -4,3 +4,19 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.App .willFadeIn {
+  opacity: 0;
+}
+
+.App .fadeIn {
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 3s;
+}
+
+.App .fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s linear;
+}

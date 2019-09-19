@@ -38,6 +38,8 @@ const initialState = Object.freeze({
   swipeOpacity: 1,
 });
 
+const FADE_IN_DURATION = 3000;
+
 class App extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
 
@@ -130,7 +132,7 @@ class App extends React.PureComponent<Props, State> {
     }
   };
 
-  onSwipeLeft = (clientX: number): void=> {
+  onSwipeLeft = (clientX: number): void => {
     if (clientX < this.state.swipeX) {
       // Swiping to the left continues
       this.updateSwipingState(clientX);
@@ -193,12 +195,11 @@ class App extends React.PureComponent<Props, State> {
     const url = `photos/${photoWidth}/${currentPhotoUrl || ''}`;
     const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
 
-    // TODO: use different fade out effect on NavigationHelp, it shouldn't be rendered at all.
     return (
       <div className="App" style={style}>
-        <NavigationHelp />
-        <Counter />
-        <PhotoDetails />
+        <NavigationHelp hideAfter={FADE_IN_DURATION} />
+        <Counter showAfter={FADE_IN_DURATION} />
+        <PhotoDetails showAfter={FADE_IN_DURATION} />
       </div>
     );
   }
