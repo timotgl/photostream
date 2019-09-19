@@ -8,8 +8,7 @@ import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
 import { getCurrentPhoto } from './selectors';
 
-// TODO should work with 'https://timotaglieber.de/photos/photos.json' later (CORS)
-const ALBUM_URL = 'http://localhost:3000/photos.json'; // 'http://172.20.10.2:3000/photos.json' for real device
+const ALBUM_URL = 'photos.json';
 
 const pushCurrentPhotoHashUrl = (getState: () => RootState): CallHistoryMethodAction => {
   const currentPhoto = getCurrentPhoto(getState());
