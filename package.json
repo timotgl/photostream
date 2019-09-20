@@ -1,5 +1,6 @@
 {
-  "name": "photos-react-ts",
+  "name": "photostream",
+  "homepage": "https://timotaglieber.de/photos",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
