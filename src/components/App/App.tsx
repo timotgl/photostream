@@ -1,5 +1,6 @@
 import React from 'react';
 
+import config from '../../config';
 import NavigationHelp from '../NavigationHelp/NavigationHelp';
 import Counter from '../Counter';
 import PhotoDetails from '../PhotoDetails';
@@ -38,8 +39,6 @@ const initialState = Object.freeze({
   swipeOpacity: 1,
 });
 
-const FADE_IN_DURATION = 3000;
-
 class App extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
 
@@ -74,6 +73,8 @@ class App extends React.PureComponent<Props, State> {
 
     // Click navigation
     document.addEventListener('click', this.onClick);
+
+    // Note: there is no componentWillUnmount or removeEventListener since the entire <App> never unmounts.
   }
 
   onKeyDown = (keyDownEvent: KeyboardEvent): void => {
@@ -186,20 +187,14 @@ class App extends React.PureComponent<Props, State> {
 
   render(): React.ReactNode {
     const { currentPhotoUrl } = this.props;
-
-    let photoWidth = 1920;
-    if (window.screen.width * window.devicePixelRatio >= 3840) {
-      photoWidth = 3840;
-    }
-
-    const url = `photos/${photoWidth}/${currentPhotoUrl || ''}`;
+    const url = `${config.IMAGES_URL}/${config.PHOTO_WIDTH}/${currentPhotoUrl || ''}`;
     const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
 
     return (
       <div className="App" style={style}>
-        <NavigationHelp hideAfter={FADE_IN_DURATION} />
-        <Counter showAfter={FADE_IN_DURATION} />
-        <PhotoDetails showAfter={FADE_IN_DURATION} />
+        <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
+        <Counter showAfter={config.FADE_IN_DURATION} />
+        <PhotoDetails showAfter={config.FADE_IN_DURATION} />
       </div>
     );
   }

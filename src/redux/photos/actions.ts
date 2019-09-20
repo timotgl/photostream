@@ -2,13 +2,12 @@ import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { push, CallHistoryMethodAction } from 'connected-react-router';
 
+import config from '../../config';
 import actionTypes from '../actionTypes';
 import { RootState } from '../interfaces';
 import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
 import { getCurrentPhoto } from './selectors';
-
-const ALBUM_URL = 'photos.json';
 
 const pushCurrentPhotoHashUrl = (getState: () => RootState): CallHistoryMethodAction => {
   const currentPhoto = getCurrentPhoto(getState());
@@ -43,7 +42,7 @@ export const fetchAlbum = (switchToPhoto: string): ThunkAction<Promise<void>, Ro
     dispatch(fetchAlbumRequest());
 
     try {
-      const album = (await loadJsonFile(ALBUM_URL)) as Array<PhotoItem>;
+      const album = (await loadJsonFile(config.ALBUM_URL)) as Array<PhotoItem>;
       if (album.every(item => isPhotoItem(item))) {
         dispatch(fetchAlbumSuccess(album, switchToPhoto));
         dispatch(pushCurrentPhotoHashUrl(getState));
