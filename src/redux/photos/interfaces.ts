@@ -1,6 +1,7 @@
 export interface State {
+  readonly albumName: string;
   readonly currentIndex: number;
-  items: Array<PhotoItem>;
+  readonly items: Array<PhotoItem>;
 }
 
 export interface PhotoItem {
