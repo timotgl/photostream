@@ -43,7 +43,9 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
       const { album, albumName, switchToPhoto } = action.payload;
       return {
         ...state,
-        currentIndex: findPhotoIndexForFile(album, switchToPhoto, state.currentIndex),
+        currentIndex: switchToPhoto
+          ? findPhotoIndexForFile(album, switchToPhoto, state.currentIndex)
+          : initialState.currentIndex, // Reset currentIndex if there is no photo to switch to via hash url
         items: album,
         albumName,
       };

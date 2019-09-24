@@ -78,6 +78,12 @@ class App extends React.PureComponent<Props, State> {
     // Note: there is no componentWillUnmount or removeEventListener since the entire <App> never unmounts.
   }
 
+  componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps.albumName !== this.props.albumName) {
+      this.props.fetchAlbum(this.props.albumName || config.ALBUM_DEFAULT_NAME, this.props.file);
+    }
+  }
+
   onKeyDown = (keyDownEvent: KeyboardEvent): void => {
     const { key } = keyDownEvent;
     const action = this.actionsForKeyDown[key];
