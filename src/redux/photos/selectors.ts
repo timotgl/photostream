@@ -3,7 +3,7 @@ import { PhotoItem } from './interfaces';
 
 const defaultPhotoItem: PhotoItem = {
   file: '',
-  title: 'Loading image&hellip;',
+  title: 'Loading image...',
   location: '',
   date: '',
   caption: '',

@@ -18,7 +18,13 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({ title, location, date, capt
     <div id="PhotoDetails" className={className}>
       <h1 id="title">{title}</h1>
       <h2 id="locationAndDate">
-        {location} &middot; {date}
+        {location || date ? (
+          <span>
+            {location} &middot; {date}
+          </span>
+        ) : (
+          ''
+        )}
       </h2>
       <p id="caption">{caption}</p>
     </div>
