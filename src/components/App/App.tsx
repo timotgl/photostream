@@ -10,10 +10,11 @@ import './App.css';
 
 interface Props {
   currentPhotoUrl?: string;
-  hash: string;
+  albumName: string;
+  file: string;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
-  fetchAlbum: (switchToPhoto: string) => void;
+  fetchAlbum: (albumName: string, switchToPhoto: string) => void;
 }
 
 enum Direction {
@@ -56,7 +57,7 @@ class App extends React.PureComponent<Props, State> {
   }
 
   componentDidMount(): void {
-    this.props.fetchAlbum(this.props.hash);
+    this.props.fetchAlbum(this.props.albumName || config.ALBUM_DEFAULT_NAME, this.props.file);
 
     // Arrow key navigation
     document.addEventListener('keydown', this.onKeyDown);
@@ -186,8 +187,8 @@ class App extends React.PureComponent<Props, State> {
   };
 
   render(): React.ReactNode {
-    const { currentPhotoUrl } = this.props;
-    const url = `${config.IMAGES_URL}/${config.PHOTO_WIDTH}/${currentPhotoUrl || ''}`;
+    const { currentPhotoUrl, albumName } = this.props;
+    const url = `${config.ALBUM_ROOT}/${albumName}/${config.PHOTO_WIDTH}/${currentPhotoUrl || ''}`;
     const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
 
     return (

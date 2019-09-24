@@ -4,6 +4,7 @@ import { AnyAction } from 'redux';
 import { PhotoItem, State } from './interfaces';
 
 const initialState: State = {
+  albumName: '',
   currentIndex: 0,
   items: [],
 };
@@ -39,11 +40,12 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
         currentIndex: newIndex,
       };
     case actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS:
-      const { album, switchToPhoto } = action.payload;
+      const { album, albumName, switchToPhoto } = action.payload;
       return {
         ...state,
         currentIndex: findPhotoIndexForFile(album, switchToPhoto, state.currentIndex),
         items: album,
+        albumName,
       };
     default:
       return state;
