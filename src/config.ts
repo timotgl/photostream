@@ -14,7 +14,7 @@ const config: Config = {
   ALBUM_FILENAME: 'album.json',
   ALBUM_DEFAULT_NAME: 'highlights',
   FADE_IN_DURATION: 3000,
-  PHOTO_WIDTH: window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_4K ? PHOTO_WIDTH_4K : PHOTO_WIDTH_HD,
+  PHOTO_WIDTH: window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD ? PHOTO_WIDTH_4K : PHOTO_WIDTH_HD,
 };
 
 export default config;
