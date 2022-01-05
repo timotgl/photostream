@@ -17,15 +17,15 @@ const pushCurrentPhotoHashUrl = (getState: () => RootState): CallHistoryMethodAc
 
 const getAlbumUrl = (albumName: string): string => `${config.ALBUM_ROOT}/${albumName}/${config.ALBUM_FILENAME}`;
 
-export const showNextPhoto = (): ThunkAction<Promise<void>, RootState, {}, AnyAction> => {
-  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: () => RootState): Promise<void> => {
+export const showNextPhoto = (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
+  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState: () => RootState): Promise<void> => {
     dispatch({ type: actionTypes.PHOTOS.SHOW_NEXT });
     dispatch(pushCurrentPhotoHashUrl(getState));
   };
 };
 
-export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, {}, AnyAction> => {
-  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: () => RootState): Promise<void> => {
+export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
+  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState: () => RootState): Promise<void> => {
     dispatch({ type: actionTypes.PHOTOS.SHOW_PREVIOUS });
     dispatch(pushCurrentPhotoHashUrl(getState));
   };
@@ -43,13 +43,13 @@ export const fetchAlbumFailure = (): AnyAction => ({ type: actionTypes.PHOTOS.FE
 export const fetchAlbum = (
   albumName: string,
   switchToPhoto: string,
-): ThunkAction<Promise<void>, RootState, {}, AnyAction> => {
-  return async (dispatch: ThunkDispatch<RootState, {}, AnyAction>, getState: () => RootState): Promise<void> => {
+): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
+  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState: () => RootState): Promise<void> => {
     dispatch(fetchAlbumRequest());
 
     try {
       const album = (await loadJsonFile(getAlbumUrl(albumName))) as Array<PhotoItem>;
-      if (album.every(item => isPhotoItem(item))) {
+      if (album.every((item) => isPhotoItem(item))) {
         dispatch(fetchAlbumSuccess(album, albumName, switchToPhoto));
         dispatch(pushCurrentPhotoHashUrl(getState));
       } else {
