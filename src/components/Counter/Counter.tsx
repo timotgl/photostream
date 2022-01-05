@@ -12,7 +12,7 @@ const Counter: React.FC<CounterProps> = ({ counter, total, showAfter }) => {
   const [className, setClassName] = useState('willFadeIn');
   useEffect(() => {
     setTimeout(() => {
-      setClassName(cn => `${cn} fadeIn`);
+      setClassName((cn) => `${cn} fadeIn`);
     }, showAfter);
   }, [showAfter]);
   return (

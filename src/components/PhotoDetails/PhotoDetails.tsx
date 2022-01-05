@@ -11,7 +11,7 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({ title, location, date, capt
   const [className, setClassName] = useState('willFadeIn');
   useEffect(() => {
     setTimeout(() => {
-      setClassName(cn => `${cn} fadeIn`);
+      setClassName((cn) => `${cn} fadeIn`);
     }, showAfter);
   }, [showAfter]);
   return (
