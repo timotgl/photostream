@@ -14,7 +14,7 @@ const requiredPathname = `${process.env.PUBLIC_URL}/`;
 const isCurrentUrlCorrect = window.location.pathname.indexOf(requiredPathname) >= 0;
 
 if (process.env.NODE_ENV === 'development' && !isCurrentUrlCorrect) {
-  // ensure that the current URL matches what is defined as "homepage" in package.json (PUBLIC_URL).
+  // Ensure that the current URL matches what is defined as "homepage" in package.json (PUBLIC_URL).
   window.location = requiredPathname as unknown as Location;
 } else {
   render(
