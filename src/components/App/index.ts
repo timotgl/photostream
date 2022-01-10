@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { showNextPhoto, showPreviousPhoto, fetchAlbum } from '../../redux/photos/actions';
+import { showNextPhoto, showPreviousPhoto, fetchAlbumAndUpdateUrl } from '../../redux/photos/actions';
 import { getCurrentPhoto } from '../../redux/photos/selectors';
 import App from './App';
 import { RootState } from '../../redux/interfaces';
@@ -24,7 +24,7 @@ const mapStateToProps = (state: RootState): StateProps => {
 const mapDispatchToProps = {
   showNextPhoto,
   showPreviousPhoto,
-  fetchAlbum,
+  fetchAlbumAndUpdateUrl,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { push, CallHistoryMethodAction } from 'connected-react-router';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import config from '../../config';
 import actionTypes from '../actionTypes';
@@ -31,32 +32,24 @@ export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, unkno
   };
 };
 
-export const fetchAlbumRequest = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_REQUEST });
-
-export const fetchAlbumSuccess = (album: Array<PhotoItem>, albumName: string, switchToPhoto: string): AnyAction => ({
-  type: actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS,
-  payload: { album, albumName, switchToPhoto },
-});
-
-export const fetchAlbumFailure = (): AnyAction => ({ type: actionTypes.PHOTOS.FETCH_ALBUM_FAILURE });
-
-export const fetchAlbum = (
-  albumName: string,
-  switchToPhoto: string,
-): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
-  return async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState: () => RootState): Promise<void> => {
-    dispatch(fetchAlbumRequest());
-
+const fetchAlbum = createAsyncThunk(
+  actionTypes.PHOTOS.FETCH_ALBUM,
+  async ({ albumName, switchToPhoto }: { albumName: string; switchToPhoto: string }, { rejectWithValue }) => {
     try {
       const album = (await loadJsonFile(getAlbumUrl(albumName))) as Array<PhotoItem>;
-      if (album.every((item) => isPhotoItem(item))) {
-        dispatch(fetchAlbumSuccess(album, albumName, switchToPhoto));
-        dispatch(pushCurrentPhotoHashUrl(getState));
-      } else {
-        dispatch(fetchAlbumFailure());
+      if (!album.every((item) => isPhotoItem(item))) {
+        return rejectWithValue('Invalid album');
       }
+      return { album, albumName, switchToPhoto };
     } catch {
-      dispatch(fetchAlbumFailure());
+      return rejectWithValue('Request failed');
     }
+  },
+);
+
+export const fetchAlbumAndUpdateUrl =
+  (album: { albumName: string; switchToPhoto: string }) =>
+  async (dispatch: ThunkDispatch<RootState, unknown, AnyAction>, getState: () => RootState) => {
+    await dispatch(fetchAlbum(album));
+    dispatch(pushCurrentPhotoHashUrl(getState));
   };
-};

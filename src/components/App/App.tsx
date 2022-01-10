@@ -14,7 +14,7 @@ interface Props {
   file: string;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
-  fetchAlbum: (albumName: string, switchToPhoto: string) => void;
+  fetchAlbumAndUpdateUrl: ({ albumName, switchToPhoto }: { albumName: string; switchToPhoto: string }) => void;
 }
 
 enum Direction {
@@ -57,7 +57,10 @@ class App extends React.PureComponent<Props, State> {
   }
 
   componentDidMount(): void {
-    this.props.fetchAlbum(this.props.albumName || config.ALBUM_DEFAULT_NAME, this.props.file);
+    this.props.fetchAlbumAndUpdateUrl({
+      albumName: this.props.albumName || config.ALBUM_DEFAULT_NAME,
+      switchToPhoto: this.props.file,
+    });
 
     // Arrow key navigation
     document.addEventListener('keydown', this.onKeyDown);

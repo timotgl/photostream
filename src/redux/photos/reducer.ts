@@ -39,7 +39,7 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
         ...state,
         currentIndex: newIndex,
       };
-    case actionTypes.PHOTOS.FETCH_ALBUM_SUCCESS:
+    case `${actionTypes.PHOTOS.FETCH_ALBUM}/fulfilled`:
       const { album, albumName, switchToPhoto } = action.payload;
       return {
         ...state,
