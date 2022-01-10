@@ -10,6 +10,9 @@ import { isPhotoItem, PhotoItem } from './interfaces';
 import loadJsonFile from '../../utils/loadJsonFile';
 import { getCurrentPhoto } from './selectors';
 
+/**
+ * Persist current album und photo in URL. This allows to share the URL to a specific photo!
+ */
 const pushCurrentPhotoHashUrl = (getState: () => RootState): CallHistoryMethodAction => {
   const state = getState();
   const currentPhoto = getCurrentPhoto(state);
