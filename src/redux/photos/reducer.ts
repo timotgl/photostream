@@ -2,6 +2,7 @@ import actionTypes from '../actionTypes';
 import { AnyAction } from 'redux';
 
 import { PhotoItem, State } from './interfaces';
+import { fetchAlbum } from './actions';
 
 const initialState: State = {
   albumName: '',
@@ -39,7 +40,7 @@ const photosReducer = (state: State = initialState, action: AnyAction): State =>
         ...state,
         currentIndex: newIndex,
       };
-    case `${actionTypes.PHOTOS.FETCH_ALBUM}/fulfilled`:
+    case fetchAlbum.fulfilled.type:
       const { album, albumName, switchToPhoto } = action.payload;
       return {
         ...state,

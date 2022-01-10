@@ -35,7 +35,7 @@ export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, unkno
   };
 };
 
-const fetchAlbum = createAsyncThunk(
+export const fetchAlbum = createAsyncThunk(
   actionTypes.PHOTOS.FETCH_ALBUM,
   async ({ albumName, switchToPhoto }: { albumName: string; switchToPhoto: string }, { rejectWithValue }) => {
     try {
