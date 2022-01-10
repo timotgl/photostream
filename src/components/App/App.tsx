@@ -82,8 +82,16 @@ class App extends React.PureComponent<Props, State> {
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (prevProps.albumName !== this.props.albumName) {
-      this.props.fetchAlbum(this.props.albumName || config.ALBUM_DEFAULT_NAME, this.props.file);
+    const { albumName: prevAlbumName } = prevProps;
+    const { albumName: nextAlbumName, file, fetchAlbumAndUpdateUrl } = this.props;
+
+    // Album in hash URL has changed, fetch the new album and jump to its first photo.
+    // Only do this if we were already looking at a previously fetched album.
+    if (prevAlbumName && prevAlbumName !== nextAlbumName) {
+      fetchAlbumAndUpdateUrl({
+        albumName: nextAlbumName || config.ALBUM_DEFAULT_NAME,
+        switchToPhoto: file,
+      });
     }
   }
 
