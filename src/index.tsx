@@ -3,12 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import configureStore, { history } from './redux/configureStore';
+import store, { history } from './redux/store';
 import App from './components/App';
 
 import './index.css';
-
-const store = configureStore();
 
 const requiredPathname = `${process.env.PUBLIC_URL}/`;
 const isCurrentUrlCorrect = window.location.pathname.indexOf(requiredPathname) >= 0;
