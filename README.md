@@ -61,7 +61,7 @@ Hosted at https://timotaglieber.de/photos.
     * Arrow keys
     * Mouse wheel
     * Clicking or tapping in the left or right half of the page
-    * Swiping left or right with tough gestures
+    * Swiping left or right with touch gestures
 12. The album will update the hash URL if you cycle to another photo. Examples:
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-first-photo.jpg`
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-second-photo.jpg`
