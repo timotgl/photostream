@@ -6,7 +6,17 @@ A photo gallery JavaScript single page app built with React, Redux, and Typescri
 
 Hosted at https://timotaglieber.de/photos.
 
-# Usage
+## Installation
+
+First download and install GraphicsMagick or ImageMagick. In Mac OS X, you can simply use Homebrew and do:
+
+```
+brew install imagemagick
+brew install graphicsmagick
+npm install
+```
+
+## Usage
 
 1. Create an `albums` directory in `./public`
 2. For each album you'd like to host, create a directory inside `./public/albums`, for example `./public/albums/album1`.
@@ -41,6 +51,7 @@ Hosted at https://timotaglieber.de/photos.
    4. Image height is not considered, since I'm assuming that most photos of an album will have "landscape" aspect ratio. This is of course a simplification and might not apply to your case.
    5. There is no restriction on image file types/extension, anything your target browser supports works.
 7. Following the given examples, the final directory content should be:
+
    ```
    public
        albums
@@ -67,6 +78,16 @@ Hosted at https://timotaglieber.de/photos.
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-second-photo.jpg`
     * This allows sharing the URL to a specific photo
 13. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
+
+### Create album from a directory containing .tif files
+
+```
+npm run create-album-from-tifs -- --source=<pathToDirWithTifFilesInside> --target=<albumOutputPath> --date="<date>" --location="<location>"
+```
+
+This will read all .tif files inside the source directory and convert them to .jpg with GraphicsMagick. An `album.json` will be created automatically. The same `date` and `location` is used for each photo. The title of each photo is the file name without extensions.
+
+Make sure that the directory `albumOutputPath` exists and that it contains the empty sub-directories `1920` and `3840`.
 
 ## Questions and answers
 
