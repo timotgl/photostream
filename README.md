@@ -8,11 +8,16 @@ Hosted at https://timotaglieber.de/photos.
 
 ## Installation
 
-First download and install GraphicsMagick or ImageMagick. In Mac OS X, you can simply use Homebrew and do:
+Optional: If you'd like to use the `create-album-from-tifs` npm script later, first download and install GraphicsMagick or ImageMagick. In Mac OS X, you can simply use Homebrew and do:
 
 ```
 brew install imagemagick
 brew install graphicsmagick
+```
+
+Regular installation:
+
+```
 npm install
 ```
 
