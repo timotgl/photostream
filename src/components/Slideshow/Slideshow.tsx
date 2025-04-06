@@ -1,12 +1,12 @@
 import React from 'react';
 
 import config from '../../config';
-import NavigationHelp from '../NavigationHelp/NavigationHelp';
-import Counter from '../Counter';
-import PhotoDetails from '../PhotoDetails';
+import NavigationHelp from './NavigationHelp/NavigationHelp';
+import Counter from './Counter';
+import PhotoDetails from './PhotoDetails';
 import { whileZoomedOut, onSingleTouchPoint } from '../../utils/touchEvents';
 
-import './App.css';
+import './Slideshow.css';
 
 interface Props {
   currentPhotoUrl?: string;
@@ -40,7 +40,7 @@ const initialState = Object.freeze({
   swipeOpacity: 1,
 });
 
-class App extends React.PureComponent<Props, State> {
+class Slideshow extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
 
   state = initialState;
@@ -57,10 +57,14 @@ class App extends React.PureComponent<Props, State> {
   }
 
   componentDidMount(): void {
-    this.props.fetchAlbumAndUpdateUrl({
-      albumName: this.props.albumName || config.ALBUM_DEFAULT_NAME,
-      switchToPhoto: this.props.file,
-    });
+    if (this.props.albumName) {
+      this.props.fetchAlbumAndUpdateUrl({
+        albumName: this.props.albumName, //  || config.ALBUM_DEFAULT_NAME
+        switchToPhoto: this.props.file,
+      });
+    } else {
+      console.log('fetchAlbumAndUpdateUrl not called, albumName is falsy');
+    }
 
     // Arrow key navigation
     document.addEventListener('keydown', this.onKeyDown);
@@ -79,6 +83,17 @@ class App extends React.PureComponent<Props, State> {
     document.addEventListener('click', this.onClick);
 
     // Note: there is no componentWillUnmount or removeEventListener since the entire <App> never unmounts.
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+    document.removeEventListener('mousewheel', this.onMouseWheel);
+    document.removeEventListener('DOMMouseScroll', this.onMouseWheel);
+
+    // TODO: Also remove event listeners for 'touchstart' and 'touchmove'.
+
+    document.removeEventListener('touchend', this.onTouchEnd);
+    document.removeEventListener('touchcancel', this.resetSwiping);
   }
 
   componentDidUpdate(prevProps: Readonly<Props>): void {
@@ -210,6 +225,7 @@ class App extends React.PureComponent<Props, State> {
 
     return (
       <div className="App" style={style}>
+        <a href={`${config.PUBLIC_URL}/#${albumName}/`}>Back to album overview</a>
         <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
         <Counter showAfter={config.FADE_IN_DURATION} />
         <PhotoDetails showAfter={config.FADE_IN_DURATION} />
@@ -218,4 +234,4 @@ class App extends React.PureComponent<Props, State> {
   }
 }
 
-export default App;
+export default Slideshow;

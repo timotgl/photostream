@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { RootState } from '../../redux/interfaces';
+import { RootState } from '../../../redux/interfaces';
 import Counter from './Counter';
 
 export interface Props {

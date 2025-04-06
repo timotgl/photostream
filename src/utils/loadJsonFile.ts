@@ -1,4 +1,4 @@
-const loadJsonFile = (file: string): Promise<object> =>
+const loadJsonFile = <T>(file: string): Promise<T> =>
   new Promise((resolve): void => {
     const rawFile: XMLHttpRequest = new XMLHttpRequest();
 

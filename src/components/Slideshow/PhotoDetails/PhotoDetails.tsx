@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './PhotoDetails.css';
-import { PhotoItem } from '../../redux/photos/interfaces';
+import { PhotoItem } from '../../../redux/photos/interfaces';
 
 interface PhotoDetailsProps extends PhotoItem {
   showAfter: number;

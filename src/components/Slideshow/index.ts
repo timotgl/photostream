@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { showNextPhoto, showPreviousPhoto, fetchAlbumAndUpdateUrl } from '../../redux/photos/actions';
 import { getCurrentPhoto } from '../../redux/photos/selectors';
-import App from './App';
+import Slideshow from './Slideshow';
 import { RootState } from '../../redux/interfaces';
 
 interface StateProps {
@@ -27,4 +27,4 @@ const mapDispatchToProps = {
   fetchAlbumAndUpdateUrl,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Slideshow);
