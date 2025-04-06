@@ -4,6 +4,7 @@ import loadJsonFile from '../../utils/loadJsonFile';
 import { PhotoItem } from '../../redux/photos/interfaces';
 import getAlbumUrl from '../../utils/getAlbumUrl';
 import config from '../../config';
+import css from './AlbumView.module.css';
 
 type Props = {
   name: string;
@@ -24,19 +25,21 @@ const Album = ({ name }: Props) => {
       <h1>Album name: {name}</h1>
       <ul>
         {photoItems.map((photoItem) => (
-          <li key={photoItem.file} style={{ display: 'inline-block' }}>
+          <li key={photoItem.file} className={css.PhotoContainer}>
             <a href={`${config.PUBLIC_URL}/#${name}/${photoItem.file}`}>
               <img
                 src={`${config.ALBUM_ROOT}/${name}/1920/${photoItem.file}`}
                 alt={photoItem.title}
-                style={{ width: '320px' }}
+                className={css.Thumbnail}
               />
+              {/*
               <h2>{photoItem.title}</h2>
               <p>
                 {photoItem.location} - {photoItem.date}
                 <br />
                 {photoItem.caption}
               </p>
+              */}
             </a>
           </li>
         ))}
