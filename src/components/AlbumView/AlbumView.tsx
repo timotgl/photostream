@@ -5,6 +5,7 @@ import { PhotoItem } from '../../redux/photos/interfaces';
 import getAlbumUrl from '../../utils/getAlbumUrl';
 import config from '../../config';
 import css from './AlbumView.module.css';
+import { buildPhotoThumbnailUrl, buildPhotoUrl } from '../../utils/urls';
 
 type Props = {
   name: string;
@@ -12,7 +13,7 @@ type Props = {
 
 const fetchAlbum = (name: string): Promise<Array<PhotoItem>> => loadJsonFile<Array<PhotoItem>>(getAlbumUrl(name));
 
-const Album = ({ name }: Props) => {
+const AlbumView = ({ name }: Props) => {
   const [photoItems, setPhotoItems] = useState<Array<PhotoItem>>([]);
 
   useEffect(() => {
@@ -26,12 +27,8 @@ const Album = ({ name }: Props) => {
       <ul>
         {photoItems.map((photoItem) => (
           <li key={photoItem.file} className={css.PhotoContainer}>
-            <a href={`${config.PUBLIC_URL}/#${name}/${photoItem.file}`}>
-              <img
-                src={`${config.ALBUM_ROOT}/${name}/1920/${photoItem.file}`}
-                alt={photoItem.title}
-                className={css.Thumbnail}
-              />
+            <a href={buildPhotoUrl(name, photoItem.file)}>
+              <img src={buildPhotoThumbnailUrl(name, photoItem.file)} alt={photoItem.title} className={css.Thumbnail} />
               {/*
               <h2>{photoItem.title}</h2>
               <p>
@@ -48,4 +45,4 @@ const Album = ({ name }: Props) => {
   );
 };
 
-export default Album;
+export default AlbumView;
