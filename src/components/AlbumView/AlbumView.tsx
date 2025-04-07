@@ -43,6 +43,7 @@ const AlbumView = ({ name, title }: Props) => {
             imageSrc={buildPhotoThumbnailUrl(name, photoItem.file)}
             title={photoItem.title}
             caption={renderThumbnailCaption(photoItem)}
+            captionOnHoverOnly
           />
         ))}
       </GridContainer>

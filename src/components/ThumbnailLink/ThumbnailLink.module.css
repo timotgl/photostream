@@ -30,3 +30,11 @@
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
+.Caption.OnHoverOnly {
+  display: none;
+}
+
+.Link:hover .Caption.OnHoverOnly {
+  display: block;
+}

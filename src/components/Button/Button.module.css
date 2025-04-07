@@ -6,6 +6,7 @@
   padding: 6px;
   border-radius: 2px;
   border: 1px solid rgb(108, 108, 108);
+  user-select: none;
 }
 
 .Button:hover {
