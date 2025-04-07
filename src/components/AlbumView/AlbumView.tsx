@@ -8,6 +8,7 @@ import css from './AlbumView.module.css';
 import { buildPhotoThumbnailUrl, buildPhotoUrl } from '../../utils/urls';
 import GridContainer from '../GridContainer';
 import ThumbnailLink from '../ThumbnailLink';
+import Button from '../Button';
 
 type Props = {
   name: string;
@@ -31,9 +32,7 @@ const AlbumView = ({ name, title }: Props) => {
   return (
     <div className={css.Container}>
       <header className={css.Header}>
-        <a href={`${config.PUBLIC_URL}/`} className={css.AlbumListLink}>
-          ← All Albums
-        </a>
+        <Button href={`${config.PUBLIC_URL}/`} text="← All Albums" />
         <h1 className={css.Title}>{title}</h1>
       </header>
       <GridContainer>

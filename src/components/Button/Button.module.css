@@ -1,0 +1,14 @@
+.Button {
+  display: inline-block;
+  font-size: 12px;
+  color: rgb(108, 108, 108);
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 2px;
+  border: 1px solid rgb(108, 108, 108);
+}
+
+.Button:hover {
+  color: white;
+  border-color: white;
+}

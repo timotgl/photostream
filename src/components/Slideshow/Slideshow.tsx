@@ -7,6 +7,7 @@ import PhotoDetails from './PhotoDetails';
 import { whileZoomedOut, onSingleTouchPoint } from '../../utils/touchEvents';
 
 import './Slideshow.css';
+import Button from '../Button';
 
 interface Props {
   currentPhotoUrl?: string;
@@ -225,7 +226,7 @@ class Slideshow extends React.PureComponent<Props, State> {
 
     return (
       <div className="App" style={style}>
-        <a href={`${config.PUBLIC_URL}/#${albumName}/`}>Back to album overview</a>
+        <Button href={`${config.PUBLIC_URL}/#${albumName}/`} text="← Overview" className="BackButton" />
         <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
         <Counter showAfter={config.FADE_IN_DURATION} />
         <PhotoDetails showAfter={config.FADE_IN_DURATION} />
