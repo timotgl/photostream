@@ -1,7 +1,25 @@
-.PhotoContainer {
-  display: inline-block;
+.Container {
 }
 
-.Thumbnail {
-    height: 180px;
+.Header {
+  margin: 20px 20px 34px 20px;
+}
+
+.AlbumListLink {
+  font-size: 12px;
+  color: rgb(108, 108, 108);
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 2px;
+  border: 1px solid rgb(108, 108, 108);
+}
+
+.AlbumListLink:hover {
+  color: white;
+  border-color: white;
+}
+
+.Title {
+  text-align: center;
+  margin: 20px 0 0 0;
 }

@@ -2,9 +2,10 @@ import React from 'react';
 
 import { AlbumDirectory } from '../../types';
 import config from '../../config';
-import css from './AlbumList.module.css';
-
-const PLACEHOLDER_IMAGE_URL = 'albums/highlights/1920/pacific-coast-highway.jpg';
+// import css from './AlbumList.module.css';
+import { buildPhotoThumbnailUrl } from '../../utils/urls';
+import GridContainer from '../GridContainer';
+import ThumbnailLink from '../ThumbnailLink';
 
 type Props = {
   albumDirectory: AlbumDirectory;
@@ -12,16 +13,17 @@ type Props = {
 
 const AlbumList = ({ albumDirectory }: Props) => {
   return (
-    <div className={css.Container}>
+    <GridContainer>
       {albumDirectory.map((album, index) => (
-        <a href={`${config.PUBLIC_URL}/#${album.name}`} key={`${album.name}-${index}`} className={css.Album}>
-          <img src={PLACEHOLDER_IMAGE_URL} alt="placeholder" className={css.Thumbnail} />
-          <p className={css.Caption}>
-            {album.title} ({album.location} - {album.date})
-          </p>
-        </a>
+        <ThumbnailLink
+          key={`${album.name}-${index}`}
+          href={`${config.PUBLIC_URL}/#${album.name}`}
+          imageSrc={buildPhotoThumbnailUrl(album.name, album.file)}
+          title={album.title}
+          caption={`${album.title} (${album.location} - ${album.date})`}
+        />
       ))}
-    </div>
+    </GridContainer>
   );
 };
 

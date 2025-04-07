@@ -1,0 +1,47 @@
+.GridContainer {
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+}
+
+@media (max-width: 519px) {
+  .GridContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (min-width: 520px) and (max-width: 839px) {
+  .GridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 840px) and (max-width: 1023px) {
+  .GridContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .GridContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1365px) and (max-width: 1599px) {
+  .GridContainer {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .GridContainer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1920px) {
+  .GridContainer {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}

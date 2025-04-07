@@ -6,14 +6,22 @@ import getAlbumUrl from '../../utils/getAlbumUrl';
 import config from '../../config';
 import css from './AlbumView.module.css';
 import { buildPhotoThumbnailUrl, buildPhotoUrl } from '../../utils/urls';
+import GridContainer from '../GridContainer';
+import ThumbnailLink from '../ThumbnailLink';
 
 type Props = {
   name: string;
+  title: string;
 };
 
 const fetchAlbum = (name: string): Promise<Array<PhotoItem>> => loadJsonFile<Array<PhotoItem>>(getAlbumUrl(name));
 
-const AlbumView = ({ name }: Props) => {
+const renderThumbnailCaption = ({ title, location, date, caption }: PhotoItem) => {
+  const base = `${title} (${location} - ${date})`;
+  return caption ? `${base}${caption}` : base;
+};
+
+const AlbumView = ({ name, title }: Props) => {
   const [photoItems, setPhotoItems] = useState<Array<PhotoItem>>([]);
 
   useEffect(() => {
@@ -21,26 +29,24 @@ const AlbumView = ({ name }: Props) => {
   }, []);
 
   return (
-    <div>
-      <a href={`${config.PUBLIC_URL}/`}>Back to album list</a>
-      <h1>Album name: {name}</h1>
-      <ul>
+    <div className={css.Container}>
+      <header className={css.Header}>
+        <a href={`${config.PUBLIC_URL}/`} className={css.AlbumListLink}>
+          ← All Albums
+        </a>
+        <h1 className={css.Title}>{title}</h1>
+      </header>
+      <GridContainer>
         {photoItems.map((photoItem) => (
-          <li key={photoItem.file} className={css.PhotoContainer}>
-            <a href={buildPhotoUrl(name, photoItem.file)}>
-              <img src={buildPhotoThumbnailUrl(name, photoItem.file)} alt={photoItem.title} className={css.Thumbnail} />
-              {/*
-              <h2>{photoItem.title}</h2>
-              <p>
-                {photoItem.location} - {photoItem.date}
-                <br />
-                {photoItem.caption}
-              </p>
-              */}
-            </a>
-          </li>
+          <ThumbnailLink
+            key={photoItem.file}
+            href={buildPhotoUrl(name, photoItem.file)}
+            imageSrc={buildPhotoThumbnailUrl(name, photoItem.file)}
+            title={photoItem.title}
+            caption={renderThumbnailCaption(photoItem)}
+          />
         ))}
-      </ul>
+      </GridContainer>
     </div>
   );
 };

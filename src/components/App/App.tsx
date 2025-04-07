@@ -15,21 +15,7 @@ const App = () => {
   const [albums, setAlbums] = useState<AlbumDirectory>([]);
 
   useEffect(() => {
-    fetchAlbumDirectory().then((albums) =>
-      setAlbums([
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-        ...albums,
-      ]),
-    );
+    fetchAlbumDirectory().then((albums) => setAlbums(albums));
   }, []);
 
   if (!albums.length) {
@@ -41,7 +27,11 @@ const App = () => {
   }
 
   if (!file) {
-    return <Album name={albumName} />;
+    const album = albums.find((album) => album.name === albumName);
+    if (!album) {
+      throw new Error('Album not found!');
+    }
+    return <Album name={albumName} title={album.title} />;
   }
 
   return <Slideshow />;
