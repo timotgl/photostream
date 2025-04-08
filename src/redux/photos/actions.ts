@@ -33,6 +33,7 @@ export const showPreviousPhoto = (): ThunkAction<Promise<void>, RootState, unkno
   };
 };
 
+// TODO: cache album.json, don't fetch it again every time the SlideShow component is mounted
 export const fetchAlbum = createAsyncThunk(
   actionTypes.PHOTOS.FETCH_ALBUM,
   async ({ albumName, switchToPhoto }: { albumName: string; switchToPhoto: string }, { rejectWithValue }) => {

@@ -15,6 +15,7 @@ type Props = {
   title: string;
 };
 
+// TODO: cache album.json, don't fetch it again every time this component is mounted
 const fetchAlbum = (name: string): Promise<Array<PhotoItem>> => loadJsonFile<Array<PhotoItem>>(getAlbumUrl(name));
 
 const renderThumbnailCaption = ({ title, location, date, caption }: PhotoItem) => {
