@@ -12,7 +12,6 @@ type Props = {
 
 const Button = ({ href, text, className = '', push }: Props) => {
   const onClick = (clickEvent: React.MouseEvent<HTMLAnchorElement>) => {
-    console.log('Button onClick called');
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
     push(href);
