@@ -5,10 +5,11 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import store, { history } from './redux/store';
 import App from './components/App';
+import config from './config';
 
 import './index.css';
 
-const requiredPathname = `${process.env.PUBLIC_URL}/`;
+const requiredPathname = `${config.PUBLIC_URL}/`;
 const isCurrentUrlCorrect = window.location.pathname.indexOf(requiredPathname) >= 0;
 
 if (process.env.NODE_ENV === 'development' && !isCurrentUrlCorrect) {

@@ -4,11 +4,11 @@ interface Config {
   // http(s)://example.com/photos
   PUBLIC_URL: string;
 
-  // Name of the json file listing all available albums
-  ALBUM_DIRECTORY_FILENAME: string;
-
   // Relative URL of the directory containing photo albums, each in different widths
   ALBUM_ROOT: string;
+
+  // Name of the json file listing all available albums
+  ALBUM_DIRECTORY_FILENAME: string;
 
   // Name of the json file listing all photos in an album
   ALBUM_FILENAME: string;
@@ -21,6 +21,9 @@ interface Config {
 
   // Photo width to be used based on screen's pixel density
   PHOTO_WIDTH: number;
+
+  // Relative URL to the album directory file
+  ALBUM_DIRECTORY_URL: string;
 }
 
 const PHOTO_WIDTH_HD = 1920;
@@ -28,12 +31,15 @@ const PHOTO_WIDTH_4K = 3840;
 
 const config: Config = {
   PUBLIC_URL: '/photos',
-  ALBUM_DIRECTORY_FILENAME: 'albums.json',
   ALBUM_ROOT: 'albums',
+  ALBUM_DIRECTORY_FILENAME: 'albums.json',
   ALBUM_FILENAME: 'album.json',
   ALBUM_DEFAULT_NAME: 'highlights',
   FADE_IN_DURATION: 0, // 3000
   PHOTO_WIDTH: window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD ? PHOTO_WIDTH_4K : PHOTO_WIDTH_HD,
+  ALBUM_DIRECTORY_URL: '',
 };
+
+config.ALBUM_DIRECTORY_URL = `${config.PUBLIC_URL}/${config.ALBUM_ROOT}/${config.ALBUM_DIRECTORY_FILENAME}`;
 
 export default config;
