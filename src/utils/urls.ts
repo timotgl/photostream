@@ -4,4 +4,4 @@ export const buildPhotoUrl = (albumName: string, file: string) => `${config.PUBL
 
 // TODO: handle different resolutions
 export const buildPhotoThumbnailUrl = (albumName: string, file: string) =>
-  `${config.ALBUM_ROOT}/${albumName}/1920/${file}`;
+  `${config.ALBUM_ROOT}/${albumName}/480/${file}`;
