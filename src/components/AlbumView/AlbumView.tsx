@@ -9,6 +9,7 @@ import { buildPhotoThumbnailUrl, buildPhotoUrl } from '../../utils/urls';
 import GridContainer from '../GridContainer';
 import ThumbnailLink from '../ThumbnailLink';
 import Button from '../Button';
+import { Album } from '../../types';
 
 type Props = {
   name: string;
@@ -18,9 +19,25 @@ type Props = {
 // TODO: cache album.json, don't fetch it again every time this component is mounted
 const fetchAlbum = (name: string): Promise<Array<PhotoItem>> => loadJsonFile<Array<PhotoItem>>(getAlbumUrl(name));
 
-const renderThumbnailCaption = ({ title, location, date, caption }: PhotoItem) => {
-  const base = `${title} (${location} - ${date})`;
-  return caption ? `${base}${caption}` : base;
+const hasLocation = (location: string) => location && location !== 'Unbekannter Ort';
+const hasDate = (date: string) => date && date !== 'Unbekanntes Datum';
+
+const formatCaption = ({ title, location, date, caption }: PhotoItem): string => {
+  const segments = [title];
+  if (hasLocation(location) || hasDate(date)) {
+    segments.push(' (');
+    if (hasLocation(location)) {
+      segments.push(location);
+    }
+    if (hasDate(date)) {
+      segments.push(` - ${date}`);
+    }
+    segments.push(')');
+  }
+  if (caption) {
+    segments.push(` ${caption}`);
+  }
+  return segments.join('');
 };
 
 const AlbumView = ({ name, title }: Props) => {
@@ -43,7 +60,7 @@ const AlbumView = ({ name, title }: Props) => {
             href={buildPhotoUrl(name, photoItem.file)}
             imageSrc={buildPhotoThumbnailUrl(name, photoItem.file)}
             title={photoItem.title}
-            caption={renderThumbnailCaption(photoItem)}
+            caption={formatCaption(photoItem)}
             captionOnHoverOnly
           />
         ))}
