@@ -30,7 +30,9 @@ const PHOTO_WIDTH_HD = 1920;
 const PHOTO_WIDTH_4K = 3840;
 
 const config: Config = {
+  // TODO: read from env var to support other URLs
   PUBLIC_URL: '/photos',
+
   ALBUM_ROOT: 'albums',
   ALBUM_DIRECTORY_FILENAME: 'albums.json',
   ALBUM_FILENAME: 'album.json',
