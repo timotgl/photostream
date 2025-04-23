@@ -1,4 +1,6 @@
-interface Config {
+import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME, PHOTO_WIDTH_4K, PHOTO_WIDTH_HD } from './constants';
+
+type Config = {
   // Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
   // Example: If this app is hosted on example.com, and PUBLIC_URL is "/photos", this app is expected under
   // http(s)://example.com/photos
@@ -24,18 +26,15 @@ interface Config {
 
   // Relative URL to the album directory file
   ALBUM_DIRECTORY_URL: string;
-}
-
-const PHOTO_WIDTH_HD = 1920;
-const PHOTO_WIDTH_4K = 3840;
+};
 
 const config: Config = {
   // TODO: read from env var to support other URLs
   PUBLIC_URL: '/photos',
 
   ALBUM_ROOT: 'albums',
-  ALBUM_DIRECTORY_FILENAME: 'albums.json',
-  ALBUM_FILENAME: 'album.json',
+  ALBUM_DIRECTORY_FILENAME,
+  ALBUM_FILENAME,
   ALBUM_DEFAULT_NAME: 'highlights',
   FADE_IN_DURATION: 0, // 3000
   PHOTO_WIDTH: window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD ? PHOTO_WIDTH_4K : PHOTO_WIDTH_HD,
