@@ -226,7 +226,7 @@ class Slideshow extends React.PureComponent<Props, State> {
 
     return (
       <div className="App" style={style}>
-        <Button href={`${config.PUBLIC_URL}/#${albumName}/`} text="← Overview" className="BackButton" />
+        <Button href={`${config.PUBLIC_URL}/#${albumName}/`} text="← Album-Übersicht" className="BackButton" />
         <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
         <Counter showAfter={config.FADE_IN_DURATION} />
         <PhotoDetails showAfter={config.FADE_IN_DURATION} />

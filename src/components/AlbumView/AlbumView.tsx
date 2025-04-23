@@ -50,7 +50,7 @@ const AlbumView = ({ name, title }: Props) => {
   return (
     <div className={css.Container}>
       <header className={css.Header}>
-        <Button href={`${config.PUBLIC_URL}/`} text="← All Albums" />
+        <Button href={`${config.PUBLIC_URL}/`} text="← Alle Alben" />
         <h1 className={css.Title}>{title}</h1>
       </header>
       <GridContainer>
