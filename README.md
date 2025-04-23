@@ -8,15 +8,6 @@ Hosted at https://timotaglieber.de/photos.
 
 ## Installation
 
-Optional: If you'd like to use the `create-album-from-tifs` npm script later, first download and install GraphicsMagick or ImageMagick. In Mac OS X, you can simply use Homebrew and do:
-
-```
-brew install imagemagick
-brew install graphicsmagick
-```
-
-Regular installation:
-
 ```
 npm install
 ```
@@ -84,15 +75,9 @@ npm install
     * This allows sharing the URL to a specific photo
 13. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
 
-### Create album from a directory containing .tif files
+### Create a gallery with multiple albums from a directory containing sub-directories with images
 
-```
-npm run create-album-from-tifs -- --source=<pathToDirWithTifFilesInside> --target=<albumOutputPath> --date="<date>" --location="<location>"
-```
-
-This will read all .tif files inside the source directory and convert them to .jpg with GraphicsMagick. An `album.json` will be created automatically. The same `date` and `location` is used for each photo. The title of each photo is the file name without extensions.
-
-Make sure that the directory `albumOutputPath` exists and that it contains the empty sub-directories `1920` and `3840`.
+TODO
 
 ## Questions and answers
 
