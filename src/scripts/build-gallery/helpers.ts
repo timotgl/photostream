@@ -17,7 +17,11 @@ export const getFileExtension = (fileName: string): string => {
 export const removeSuffix = (str: string, suffix: string) =>
   str.endsWith(suffix) ? str.slice(0, -suffix.length) : str;
 
-export const convertImage = (input: string, output: string, width: number): Promise<string> =>
+export const convertImage = (
+  input: string,
+  output: string,
+  width: number,
+): Promise<string> =>
   new Promise((resolve, reject) => {
     const args = [
       'convert',

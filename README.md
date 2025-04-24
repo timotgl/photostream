@@ -12,6 +12,8 @@ Hosted at https://timotaglieber.de/photos.
 npm install
 ```
 
+Create a copy of the file `.env.example` and name it `.env`. Edit it and insert correct values for all env vars.
+
 ## Usage
 
 1. Create an `albums` directory in `./public`

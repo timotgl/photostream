@@ -1,7 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import type { Album, AlbumDirectory, FileToPrepare, PhotoItem } from './types.ts';
+import env from './env';
+import type {
+  Album,
+  AlbumDirectory,
+  FileToPrepare,
+  PhotoItem,
+} from './types.ts';
 import {
   getFileExtension,
   removeSuffix,
@@ -9,18 +15,13 @@ import {
   ensureDirectoryExists,
   extractLastPathSegment,
 } from './helpers.ts';
-import { SOURCE_DIR, DESTINATION_DIR, ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME, PHOTO_WIDTHS } from '../../constants.ts';
+import {
+  ALBUM_DIRECTORY_FILENAME,
+  ALBUM_FILENAME,
+  PHOTO_WIDTHS,
+} from '../../constants.ts';
 
 export const IGNORE_FILES = new Set(['.DS_Store']);
-
-// Use "1_original_testrun" for a quick test with only a few images
-// export const SOURCE_DIR = '/Volumes/PHOTOS/Photos/0002_familienfotos-webspace/1_original';
-// export const DESTINATION_DIR = '/Volumes/PHOTOS/Photos/0002_familienfotos-webspace/2_compressed';
-
-// /Volumes/Code/timotaglieber.de/fotos
-export const SOURCE_DIR = '/Volumes/Code/timotaglieber.de/fotos/testrun/1_original';
-export const DESTINATION_DIR = '/Volumes/Code/timotaglieber.de/fotos/testrun/2_compressed';
-
 
 const getFiles = async (dir: string): Promise<Array<FileToPrepare>> => {
   const files = await fs.readdir(dir, { withFileTypes: true });
@@ -40,7 +41,7 @@ const getFiles = async (dir: string): Promise<Array<FileToPrepare>> => {
         ext: ext.toLowerCase(),
         dir: extractLastPathSegment(file.parentPath),
         pathAbs: absolutePath,
-        pathRel: absolutePath.replace(SOURCE_DIR, ''),
+        pathRel: absolutePath.replace(env.SOURCE_DIR, ''),
       };
       filesToPrepare.push(fileToPrepare);
     }
@@ -48,14 +49,19 @@ const getFiles = async (dir: string): Promise<Array<FileToPrepare>> => {
   return filesToPrepare;
 };
 
-console.log(`Scanning ${SOURCE_DIR} for files to prepare for webspace upload.`);
-const filesToPrepare = await getFiles(SOURCE_DIR);
+console.log(
+  `Scanning ${env.SOURCE_DIR} for files to prepare for webspace upload.`,
+);
+const filesToPrepare = await getFiles(env.SOURCE_DIR);
 
 console.log(`Found ${filesToPrepare.length} files to process.`);
 
 const processFile = async (fileToPrepare: FileToPrepare): Promise<void> => {
-  const parentDirPathRel = removeSuffix(fileToPrepare.pathRel, fileToPrepare.nameExt);
-  const parentDirPathAbs = `${DESTINATION_DIR}${parentDirPathRel}`;
+  const parentDirPathRel = removeSuffix(
+    fileToPrepare.pathRel,
+    fileToPrepare.nameExt,
+  );
+  const parentDirPathAbs = `${env.DESTINATION_DIR}${parentDirPathRel}`;
   await ensureDirectoryExists(parentDirPathAbs);
 
   const convertedFileName = `${fileToPrepare.name}.jpg`;
@@ -65,7 +71,11 @@ const processFile = async (fileToPrepare: FileToPrepare): Promise<void> => {
       const photoWidthAbsPath = `${parentDirPathAbs}/${photoWidth}`;
       await ensureDirectoryExists(photoWidthAbsPath);
       const convertedFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
-      await convertImage(fileToPrepare.pathAbs, convertedFileAbsPath, photoWidth);
+      await convertImage(
+        fileToPrepare.pathAbs,
+        convertedFileAbsPath,
+        photoWidth,
+      );
     }
   } else {
     return;
@@ -127,10 +137,16 @@ if (!albums.length) {
   process.exit(0);
 }
 
-console.log(`Found ${albums.length} album(s). Writing "${ALBUM_DIRECTORY_FILENAME}".`);
+console.log(
+  `Found ${albums.length} album(s). Writing "${ALBUM_DIRECTORY_FILENAME}".`,
+);
 try {
-  const albumDirFileAbsPath = `${DESTINATION_DIR}/${ALBUM_DIRECTORY_FILENAME}`;
-  await fs.writeFile(albumDirFileAbsPath, JSON.stringify(albums, null, 2), 'utf8');
+  const albumDirFileAbsPath = `${env.DESTINATION_DIR}/${ALBUM_DIRECTORY_FILENAME}`;
+  await fs.writeFile(
+    albumDirFileAbsPath,
+    JSON.stringify(albums, null, 2),
+    'utf8',
+  );
   console.log('File written successfully.');
 } catch (err) {
   console.error('Error writing file:', err);
@@ -139,9 +155,13 @@ try {
 for (const albumName of Object.keys(photoItemsByAlbumName)) {
   console.log(`Writing ${ALBUM_FILENAME} for album "${albumName}".`);
   try {
-    const albumFileAbsPath = `${DESTINATION_DIR}/${albumName}/${ALBUM_FILENAME}`;
+    const albumFileAbsPath = `${env.DESTINATION_DIR}/${albumName}/${ALBUM_FILENAME}`;
     console.log('albumFileAbsPath:', albumFileAbsPath);
-    await fs.writeFile(albumFileAbsPath, JSON.stringify(photoItemsByAlbumName[albumName], null, 2), 'utf8');
+    await fs.writeFile(
+      albumFileAbsPath,
+      JSON.stringify(photoItemsByAlbumName[albumName], null, 2),
+      'utf8',
+    );
     console.log('File written successfully.');
   } catch (err) {
     console.error('Error writing file:', err);
