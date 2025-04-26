@@ -1,5 +1,5 @@
 import React from 'react';
-import { push } from 'connected-react-router';
+import { useHashLocation } from 'wouter/use-hash-location';
 
 import css from './Button.module.css';
 
@@ -7,17 +7,21 @@ type Props = {
   href: string;
   text: string;
   className?: string;
-  push: typeof push;
 };
 
-const Button = ({ href, text, className = '', push }: Props) => {
+const Button = ({ href, text, className = '' }: Props) => {
+  const [, navigate] = useHashLocation();
   const onClick = (clickEvent: React.MouseEvent<HTMLAnchorElement>) => {
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
-    push(href);
+    navigate(href);
   };
   return (
-    <a href={href} className={[css.Button, className].join(' ')} onClick={onClick}>
+    <a
+      href={href}
+      className={[css.Button, className].join(' ')}
+      onClick={onClick}
+    >
       {text}
     </a>
   );

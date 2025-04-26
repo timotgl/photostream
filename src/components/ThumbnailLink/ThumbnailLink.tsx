@@ -1,7 +1,7 @@
 import React from 'react';
-import { push } from 'connected-react-router';
 
 import css from './ThumbnailLink.module.css';
+import { useHashLocation } from 'wouter/use-hash-location';
 
 type Props = {
   href: string;
@@ -9,19 +9,32 @@ type Props = {
   title: string;
   caption: string;
   captionOnHoverOnly?: boolean;
-  push: typeof push;
 };
 
-const ThumbnailLink = ({ href, imageSrc, title, caption, captionOnHoverOnly = false, push }: Props) => {
+const ThumbnailLink = ({
+  href,
+  imageSrc,
+  title,
+  caption,
+  captionOnHoverOnly = false,
+}: Props) => {
+  const [, navigate] = useHashLocation();
   const onClick = (clickEvent: React.MouseEvent<HTMLAnchorElement>) => {
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
-    push(href);
+    navigate(href);
   };
   return (
     <a href={href} className={css.Link} onClick={onClick}>
       <img src={imageSrc} alt={title} className={css.Image} />
-      <p className={[css.Caption, ...[captionOnHoverOnly ? css.OnHoverOnly : '']].join(' ')}>{caption}</p>
+      <p
+        className={[
+          css.Caption,
+          ...[captionOnHoverOnly ? css.OnHoverOnly : ''],
+        ].join(' ')}
+      >
+        {caption}
+      </p>
     </a>
   );
 };

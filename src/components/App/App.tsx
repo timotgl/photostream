@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHashLocation } from 'wouter/use-hash-location';
 
 import Album from '../AlbumView';
 import Slideshow from '../Slideshow';
@@ -6,12 +7,10 @@ import { AlbumDirectory } from '../../types';
 import AlbumList from '../AlbumList';
 import { fetchAlbumDirectory } from '../../utils/fetch';
 
-type Props = {
-  albumName: string;
-  file: string;
-};
+const App = () => {
+  const [hash] = useHashLocation();
+  const [albumName, file] = hash.slice(1).split('/');
 
-const App = ({ albumName, file }: Props) => {
   const [albums, setAlbums] = useState<AlbumDirectory>([]);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const App = ({ albumName, file }: Props) => {
     return <Album name={albumName} title={album.title} />;
   }
 
-  return <Slideshow />;
+  return <Slideshow albumName={albumName} file={file} />;
 };
 
 export default App;
