@@ -1,10 +1,16 @@
-import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME, PHOTO_WIDTH_4K, PHOTO_WIDTH_HD } from './constants';
+import {
+  ALBUM_DIRECTORY_FILENAME,
+  ALBUM_FILENAME,
+  PHOTO_WIDTH_4K,
+  PHOTO_WIDTH_HD,
+} from './constants';
 
 type Config = {
   // Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
-  // Example: If this app is hosted on example.com, and PUBLIC_URL is "/photos", this app is expected under
+  // Example: If this app is hosted on example.com, and VITE_PUBLIC_URL is "/photos", this app is expected under
   // http(s)://example.com/photos
-  PUBLIC_URL: string;
+  // Use an empty string here to expect the app under http(s)://example.com/ without any additional path.
+  VITE_PUBLIC_URL: string;
 
   // Relative URL of the directory containing photo albums, each in different widths
   ALBUM_ROOT: string;
@@ -29,18 +35,19 @@ type Config = {
 };
 
 const config: Config = {
-  // TODO: read from env var to support other URLs
-  PUBLIC_URL: '/photos',
-
+  VITE_PUBLIC_URL: import.meta.env.VITE_PUBLIC_URL,
   ALBUM_ROOT: 'albums',
   ALBUM_DIRECTORY_FILENAME,
   ALBUM_FILENAME,
   ALBUM_DEFAULT_NAME: 'highlights',
   FADE_IN_DURATION: 0, // 3000
-  PHOTO_WIDTH: window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD ? PHOTO_WIDTH_4K : PHOTO_WIDTH_HD,
+  PHOTO_WIDTH:
+    window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD
+      ? PHOTO_WIDTH_4K
+      : PHOTO_WIDTH_HD,
   ALBUM_DIRECTORY_URL: '',
 };
 
-config.ALBUM_DIRECTORY_URL = `${config.PUBLIC_URL}/${config.ALBUM_ROOT}/${config.ALBUM_DIRECTORY_FILENAME}`;
+config.ALBUM_DIRECTORY_URL = `${config.VITE_PUBLIC_URL}/${config.ALBUM_ROOT}/${config.ALBUM_DIRECTORY_FILENAME}`;
 
 export default config;

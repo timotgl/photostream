@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const ENV_VARS = ['SOURCE_DIR', 'DESTINATION_DIR', 'PUBLIC_URL'];
+const ENV_VARS = ['SOURCE_DIR', 'DESTINATION_DIR', 'VITE_PUBLIC_URL'];
 
 const env: Record<string, string> = {};
 
@@ -31,10 +31,11 @@ type Env = {
 
   /**
    * Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
-   * Example: If this app is hosted on example.com, and PUBLIC_URL is "/photos", this app is expected under
+   * Example: If this app is hosted on example.com, and VITE_PUBLIC_URL is "/photos", this app is expected under
    * http(s)://example.com/photos
+   * Use an empty string here to expect the app under http(s)://example.com/ without any additional path.
    */
-  PUBLIC_URL: string;
+  VITE_PUBLIC_URL: string;
 };
 
 export default env as Env;
