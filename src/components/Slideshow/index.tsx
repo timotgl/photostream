@@ -1,26 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useHashLocation } from 'wouter/use-hash-location';
 
 import Slideshow from './Slideshow';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
-import { PhotoItem } from '../../types.ts';
-import { useHashLocation } from 'wouter/use-hash-location';
-
-const findPhotoIndexForFile = (
-  items: Array<PhotoItem>,
-  file: string,
-  currentIndex: number,
-): number => {
-  let newIndex: number = currentIndex;
-  items.find((photo: PhotoItem, index: number) => {
-    if (photo.file === file) {
-      newIndex = index;
-      return true;
-    }
-    return false;
-  });
-  return newIndex;
-};
+import { findPhotoIndexForFile } from './helpers.ts';
 
 const SlideShowWithHashLocation = () => {
   const { albumName, file } = useAlbumAndFileHashLocation();
