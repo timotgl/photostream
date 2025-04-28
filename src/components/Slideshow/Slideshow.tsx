@@ -232,6 +232,7 @@ class Slideshow extends React.PureComponent<Props, State> {
 
     return (
       <div className="App" style={style}>
+        {/* TODO: use i18n */}
         <Button
           href={albumName}
           text="← Album-Übersicht"

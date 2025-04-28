@@ -43,7 +43,9 @@ const AlbumView = () => {
   return (
     <div className={css.Container}>
       <header className={css.Header}>
+        {/* TODO: use i18n */}
         <Button href="" text="← Alle Alben" />
+        {/* TODO: use i18n */}
         <h1 className={css.Title}>{album?.title || 'Lade Album...'}</h1>
       </header>
       <GridContainer>
