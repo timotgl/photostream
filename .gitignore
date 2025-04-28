@@ -1,2 +1,8 @@
-/build
-public/albums
+# File containing environment variables
+.env
+
+# Build output, production JS bundle
+/dist
+
+# Root of photo gallery (unless a name other than "albums" is configured).
+/public/albums

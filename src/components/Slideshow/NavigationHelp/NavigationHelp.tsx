@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import './NavigationHelp.css';
 
-const NavigationHelp: React.FC<{ hideAfter: number }> = ({ hideAfter }) => {
+type Props = {
+  hideAfter: number;
+};
+
+const NavigationHelp = ({ hideAfter }: Props) => {
   const [className, setClassName] = useState('');
   useEffect(() => {
     setTimeout(() => {
@@ -11,7 +15,9 @@ const NavigationHelp: React.FC<{ hideAfter: number }> = ({ hideAfter }) => {
   }, [hideAfter]);
   return (
     <div id="navigationHelp" className={className}>
-      <h1>Use click, swipe left/right, arrow keys, or mouse wheel to browse photos</h1>
+      <h1>
+        Use click, swipe left/right, arrow keys, or mouse wheel to browse photos
+      </h1>
     </div>
   );
 };

@@ -1,39 +1,40 @@
-import { useEffect, useState } from 'react';
-import { useHashLocation } from 'wouter/use-hash-location';
+import { useEffect } from 'react';
 
 import Album from '../AlbumView';
 import Slideshow from '../Slideshow';
-import { AlbumDirectory } from '../../types';
 import AlbumList from '../AlbumList';
-import { fetchAlbumDirectory } from '../../utils/fetch';
+import useAlbumStore from '../../store/useAlbumStore.ts';
+import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 
 const App = () => {
-  const [hash] = useHashLocation();
-  const [albumName, file] = hash.slice(1).split('/');
+  const { albumName, file } = useAlbumAndFileHashLocation();
 
-  const [albums, setAlbums] = useState<AlbumDirectory>([]);
+  const albumNamesInOrder = useAlbumStore((state) => state.albumNamesInOrder);
+  const fetchAlbumDirectory = useAlbumStore(
+    (state) => state.fetchAlbumDirectory,
+  );
 
   useEffect(() => {
-    fetchAlbumDirectory().then((albums) => setAlbums(albums));
+    if (!albumNamesInOrder.length) {
+      // noinspection JSIgnoredPromiseFromCall
+      fetchAlbumDirectory();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!albums.length) {
+  if (!albumNamesInOrder.length) {
     return <div>Fetching album directory</div>;
   }
 
   if (!albumName) {
-    return <AlbumList albumDirectory={albums} />;
+    return <AlbumList />;
   }
 
   if (!file) {
-    const album = albums.find((album) => album.name === albumName);
-    if (!album) {
-      throw new Error('Album not found!');
-    }
-    return <Album name={albumName} title={album.title} />;
+    return <Album />;
   }
 
-  return <Slideshow albumName={albumName} file={file} />;
+  return <Slideshow />;
 };
 
 export default App;

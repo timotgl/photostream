@@ -16,3 +16,17 @@ export type Album = {
 };
 
 export type AlbumDirectory = Array<Album>;
+
+export type PhotoItem = {
+  file: string;
+  title: string;
+  location: string;
+  date: string;
+  caption?: string;
+};
+
+export type AlbumContent = Array<PhotoItem>;
+
+export type AlbumWithContent = Album & {
+  content: AlbumContent;
+};

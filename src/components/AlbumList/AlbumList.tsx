@@ -1,17 +1,11 @@
-import React from 'react';
-
-import { Album, AlbumDirectory } from '../../types';
-import config from '../../config';
-// import css from './AlbumList.module.css';
+import { Album } from '../../types';
 import { buildPhotoThumbnailUrl } from '../../utils/urls';
 import GridContainer from '../GridContainer';
 import ThumbnailLink from '../ThumbnailLink';
+import useAlbumStore from '../../store/useAlbumStore.ts';
 
-type Props = {
-  albumDirectory: AlbumDirectory;
-};
-
-const hasLocation = (location: string) => location && location !== 'Unbekannter Ort';
+const hasLocation = (location: string) =>
+  location && location !== 'Unbekannter Ort';
 const hasDate = (date: string) => date && date !== 'Unbekanntes Datum';
 
 const formatCaption = ({ title, location, date }: Album): string => {
@@ -29,18 +23,23 @@ const formatCaption = ({ title, location, date }: Album): string => {
   return segments.join('');
 };
 
-const AlbumList = ({ albumDirectory }: Props) => {
+const AlbumList = () => {
+  const albumNamesInOrder = useAlbumStore((state) => state.albumNamesInOrder);
+  const albumsByName = useAlbumStore((state) => state.albumByName);
   return (
     <GridContainer>
-      {albumDirectory.map((album, index) => (
-        <ThumbnailLink
-          key={`${album.name}-${index}`}
-          href={`${config.PUBLIC_URL}/#${album.name}`}
-          imageSrc={buildPhotoThumbnailUrl(album.name, album.file)}
-          title={album.title}
-          caption={formatCaption(album)}
-        />
-      ))}
+      {albumNamesInOrder.map((albumName) => {
+        const album = albumsByName[albumName];
+        return (
+          <ThumbnailLink
+            key={album.name}
+            href={album.name}
+            imageSrc={buildPhotoThumbnailUrl(album.name, album.file)}
+            title={album.title}
+            caption={formatCaption(album)}
+          />
+        );
+      })}
     </GridContainer>
   );
 };

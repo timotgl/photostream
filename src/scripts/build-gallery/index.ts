@@ -56,6 +56,11 @@ const filesToPrepare = await getFiles(env.SOURCE_DIR);
 
 console.log(`Found ${filesToPrepare.length} files to process.`);
 
+/**
+ * TODO: this attempts to convert *every* file to JPG.
+ * Check if file is actually an image (or do this filtering inside getFiles() above)
+ * and if it is already a JPG, check if it needs resizing first.
+ */
 const processFile = async (fileToPrepare: FileToPrepare): Promise<void> => {
   const parentDirPathRel = removeSuffix(
     fileToPrepare.pathRel,
@@ -65,28 +70,12 @@ const processFile = async (fileToPrepare: FileToPrepare): Promise<void> => {
   await ensureDirectoryExists(parentDirPathAbs);
 
   const convertedFileName = `${fileToPrepare.name}.jpg`;
-  if (fileToPrepare.ext === 'tif' || true) {
-    console.log(`Converting ${fileToPrepare.pathAbs}`);
-    for (const photoWidth of PHOTO_WIDTHS) {
-      const photoWidthAbsPath = `${parentDirPathAbs}/${photoWidth}`;
-      await ensureDirectoryExists(photoWidthAbsPath);
-      const convertedFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
-      await convertImage(
-        fileToPrepare.pathAbs,
-        convertedFileAbsPath,
-        photoWidth,
-      );
-    }
-  } else {
-    return;
-    // Disable non-tif files completely for now
-    /*
-    console.log(`Copying ${fileToPrepare.pathAbs}`);
-    // TODO: non-tif files also need to be resized if they're big JPGs for example.
-    // And also be put into the 1920 and 3840 sub folders!
-    const destFilePathAbs = DESTINATION_DIR + fileToPrepare.pathRel;
-    await fs.copyFile(fileToPrepare.pathAbs, destFilePathAbs);
-    */
+  console.log(`Converting ${fileToPrepare.pathAbs}`);
+  for (const photoWidth of PHOTO_WIDTHS) {
+    const photoWidthAbsPath = `${parentDirPathAbs}/${photoWidth}`;
+    await ensureDirectoryExists(photoWidthAbsPath);
+    const convertedFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
+    await convertImage(fileToPrepare.pathAbs, convertedFileAbsPath, photoWidth);
   }
 
   // Add album to album directory if that hasn't happened yet.

@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
 import './PhotoDetails.css';
-import { PhotoItem } from '../../../redux/photos/interfaces';
+import useAlbumStore from '../../../store/useAlbumStore.ts';
+import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
+import { PhotoItem } from '../../../types.ts';
 
-interface PhotoDetailsProps extends PhotoItem {
+interface PhotoDetailsProps {
+  currentPhotoIndex: number;
   showAfter: number;
 }
 
-const PhotoDetails: React.FC<PhotoDetailsProps> = ({ title, location, date, caption, showAfter }) => {
+const PlaceholderPhotoItem: PhotoItem = {
+  file: '',
+  title: 'Loading image...',
+  location: '',
+  date: '',
+  caption: '',
+};
+
+const PhotoDetails: React.FC<PhotoDetailsProps> = ({
+  currentPhotoIndex,
+  showAfter,
+}) => {
+  const { albumName } = useAlbumAndFileHashLocation();
+  const { title, location, date, caption } = useAlbumStore((state) => {
+    const { content } = state.albumByName[albumName];
+    return content.length ? content[currentPhotoIndex] : PlaceholderPhotoItem;
+  });
+
   const [className, setClassName] = useState('willFadeIn');
   useEffect(() => {
     setTimeout(() => {

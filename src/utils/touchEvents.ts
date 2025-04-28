@@ -6,7 +6,9 @@ interface SingleTouchpointListener {
   (touch: Touch): void;
 }
 
-export const whileZoomedOut = (callback: TouchEventListener): TouchEventListener => {
+export const whileZoomedOut = (
+  callback: TouchEventListener,
+): TouchEventListener => {
   return (event: TouchEvent): void => {
     const zoomLevel = document.documentElement.clientWidth / window.innerWidth;
     if (zoomLevel === 1) {
@@ -15,7 +17,10 @@ export const whileZoomedOut = (callback: TouchEventListener): TouchEventListener
   };
 };
 
-export const onSingleTouchPoint = (callback: SingleTouchpointListener, onMany: () => void): TouchEventListener => {
+export const onSingleTouchPoint = (
+  callback: SingleTouchpointListener,
+  onMany: () => void,
+): TouchEventListener => {
   return (event: TouchEvent): void => {
     if (event.touches.length === 1) {
       callback(event.touches[0]);

@@ -10,12 +10,11 @@ import './Slideshow.css';
 import Button from '../Button';
 
 interface Props {
-  currentPhotoUrl?: string;
   albumName: string;
   file: string;
+  currentPhotoIndex: number;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
-  fetchAlbumAndUpdateUrl: ({ albumName, switchToPhoto }: { albumName: string; switchToPhoto: string }) => void;
 }
 
 enum Direction {
@@ -48,25 +47,9 @@ class Slideshow extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const { showNextPhoto, showPreviousPhoto } = props;
-    this.actionsForKeyDown = {
-      ArrowRight: showPreviousPhoto,
-      ArrowLeft: showNextPhoto,
-      ArrowUp: showNextPhoto,
-      ArrowDown: showPreviousPhoto,
-    };
   }
 
   componentDidMount(): void {
-    if (this.props.albumName) {
-      this.props.fetchAlbumAndUpdateUrl({
-        albumName: this.props.albumName, //  || config.ALBUM_DEFAULT_NAME
-        switchToPhoto: this.props.file,
-      });
-    } else {
-      console.log('fetchAlbumAndUpdateUrl not called, albumName is falsy');
-    }
-
     // Arrow key navigation
     document.addEventListener('keydown', this.onKeyDown);
 
@@ -75,8 +58,14 @@ class Slideshow extends React.PureComponent<Props, State> {
     document.addEventListener('DOMMouseScroll', this.onMouseWheel); // Firefox
 
     // Swipe left/right navigation
-    document.addEventListener('touchstart', whileZoomedOut(onSingleTouchPoint(this.onTouchStart, this.resetSwiping)));
-    document.addEventListener('touchmove', whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping)));
+    document.addEventListener(
+      'touchstart',
+      whileZoomedOut(onSingleTouchPoint(this.onTouchStart, this.resetSwiping)),
+    );
+    document.addEventListener(
+      'touchmove',
+      whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping)),
+    );
     document.addEventListener('touchend', this.onTouchEnd);
     document.addEventListener('touchcancel', this.resetSwiping);
 
@@ -95,20 +84,6 @@ class Slideshow extends React.PureComponent<Props, State> {
 
     document.removeEventListener('touchend', this.onTouchEnd);
     document.removeEventListener('touchcancel', this.resetSwiping);
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props>): void {
-    const { albumName: prevAlbumName } = prevProps;
-    const { albumName: nextAlbumName, file, fetchAlbumAndUpdateUrl } = this.props;
-
-    // Album in hash URL has changed, fetch the new album and jump to its first photo.
-    // Only do this if we were already looking at a previously fetched album.
-    if (prevAlbumName && prevAlbumName !== nextAlbumName) {
-      fetchAlbumAndUpdateUrl({
-        albumName: nextAlbumName || config.ALBUM_DEFAULT_NAME,
-        switchToPhoto: file,
-      });
-    }
   }
 
   onKeyDown = (keyDownEvent: KeyboardEvent): void => {
@@ -137,11 +112,12 @@ class Slideshow extends React.PureComponent<Props, State> {
 
   updateSwipingState = (clientX: number): void =>
     this.setState(
-      {
+      (prevState) => ({
         swipeX: clientX,
-        swipeOpacity: this.state.swipeOpacity - 0.05,
-      },
+        swipeOpacity: prevState.swipeOpacity - 0.05,
+      }),
       () => {
+        // eslint-disable-next-line react-x/no-access-state-in-setstate
         document.body.style['opacity'] = String(this.state.swipeOpacity);
       },
     );
@@ -180,6 +156,12 @@ class Slideshow extends React.PureComponent<Props, State> {
   onTouchMove = (touch: Touch): void => {
     const { clientX } = touch;
 
+    if (this.state.swipeDir === Direction.None) {
+      // TS thinks swipeDir will never have the values we check in the switch statement below.
+      // Explicitly check for None to prevent a false positive TS error here.
+      return;
+    }
+
     switch (this.state.swipeDir) {
       case Direction.Start:
         this.onSwipeStart(clientX);
@@ -189,10 +171,17 @@ class Slideshow extends React.PureComponent<Props, State> {
         break;
       case Direction.Left:
         this.onSwipeLeft(clientX);
+        break;
     }
   };
 
   onTouchEnd = (): void => {
+    if (this.state.swipeDir === Direction.None) {
+      // TS thinks swipeDir will never have the values we check in the switch statement below.
+      // Explicitly check for None to prevent a false positive TS error here.
+      return;
+    }
+
     switch (this.state.swipeDir) {
       case Direction.Right:
         this.resetSwiping();
@@ -206,12 +195,13 @@ class Slideshow extends React.PureComponent<Props, State> {
 
   resetSwiping = (): void => {
     this.setState(initialState, () => {
-      document.body.style['opacity'] = this.state.swipeOpacity.toString();
+      document.body.style['opacity'] = initialState.swipeOpacity.toString();
     });
   };
 
   onClick = (event: Event): void => {
-    const isInLeftHalf: boolean = window.innerWidth / 2 > (event as MouseEvent).clientX;
+    const isInLeftHalf: boolean =
+      window.innerWidth / 2 > (event as MouseEvent).clientX;
     if (isInLeftHalf) {
       this.props.showNextPhoto();
     } else {
@@ -220,9 +210,25 @@ class Slideshow extends React.PureComponent<Props, State> {
   };
 
   render(): React.ReactNode {
-    const { currentPhotoUrl, albumName } = this.props;
-    const url = `${config.ALBUM_ROOT}/${albumName}/${config.PHOTO_WIDTH}/${currentPhotoUrl || ''}`;
-    const style = currentPhotoUrl ? { backgroundImage: `url('${url}')` } : {};
+    const {
+      albumName,
+      file,
+      currentPhotoIndex,
+      showNextPhoto,
+      showPreviousPhoto,
+    } = this.props;
+
+    // next/previous functions are re-created after a new photo is shown,
+    // so we need to overwrite this mapping on every render.
+    this.actionsForKeyDown = {
+      ArrowRight: showPreviousPhoto,
+      ArrowLeft: showNextPhoto,
+      ArrowUp: showNextPhoto,
+      ArrowDown: showPreviousPhoto,
+    };
+
+    const url = `${config.ALBUM_ROOT}/${albumName}/${config.PHOTO_WIDTH}/${file}`;
+    const style = file ? { backgroundImage: `url('${url}')` } : {};
 
     return (
       <div className="App" style={style}>
@@ -232,8 +238,14 @@ class Slideshow extends React.PureComponent<Props, State> {
           className="BackButton"
         />
         <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
-        <Counter showAfter={config.FADE_IN_DURATION} />
-        <PhotoDetails showAfter={config.FADE_IN_DURATION} />
+        <Counter
+          currentPhotoIndex={currentPhotoIndex}
+          showAfter={config.FADE_IN_DURATION}
+        />
+        <PhotoDetails
+          currentPhotoIndex={currentPhotoIndex}
+          showAfter={config.FADE_IN_DURATION}
+        />
       </div>
     );
   }

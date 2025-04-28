@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-import { Props } from './index';
-
 import './Counter.css';
+import useAlbumStore from '../../../store/useAlbumStore.ts';
+import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
 
-interface CounterProps extends Props {
+interface CounterProps {
+  currentPhotoIndex: number;
   showAfter: number;
 }
 
-const Counter: React.FC<CounterProps> = ({ counter, total, showAfter }) => {
+const Counter: React.FC<CounterProps> = ({ currentPhotoIndex, showAfter }) => {
+  const counter = currentPhotoIndex + 1;
+  const { albumName } = useAlbumAndFileHashLocation();
+  const total = useAlbumStore(
+    (state) => state.albumByName[albumName].content.length,
+  );
+
   const [className, setClassName] = useState('willFadeIn');
   useEffect(() => {
     setTimeout(() => {

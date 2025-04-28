@@ -2,7 +2,7 @@
 
 ![Screenshot of app](public/screenshot.png 'Screenshot of app')
 
-A photo gallery JavaScript single page app built with React, Redux, and Typescript. Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A photo gallery JavaScript single page app built with React, Zustand, and Typescript.
 
 Hosted at https://timotaglieber.de/photos.
 
@@ -17,9 +17,10 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
 ## Usage
 
 1. Create an `albums` directory in `./public`
-2. For each album you'd like to host, create a directory inside `./public/albums`, for example `./public/albums/album1`.
-3. Create a .json file listing the album content: `./public/albums/album1/album.json`.
-4. List your photos in `album.json` by using the following structure:
+1. For each album you'd like to host, create a directory inside `./public/albums`, for example `./public/albums/album1`.
+1. TODO explain how to create `albums.json`.
+1. Create a .json file listing the album content: `./public/albums/album1/album.json`.
+1. List your photos in `album.json` by using the following structure:
    ```
    [
      {
@@ -39,16 +40,16 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
    ]
    ```
    - The first element of the array is the first photo that is shown in the app (the counter in the upper right corner will show `1/X`).
-5. Create directories for the two supported maximum image widths in `./public/albums/album1`:
+1. Create directories for the two supported maximum image widths in `./public/albums/album1`:
    1. `./public/albums/album1/1920` and
-   2. `./public/albums/album1/3840`
-6. `1920` and `3840` are expected to contain the same number of files and the same file names, but each has the images scaled down:
+   1. `./public/albums/album1/3840`
+1. `1920` and `3840` are expected to contain the same number of files and the same file names, but each has the images scaled down:
    1. Every image in `./public/albums/album1/1920` has a maximum width of 1920 pixels.
-   2. Every image in `./public/albums/album1/3840` has a maximum width of 3840 pixels.
-   3. The file names must match the `file` property from `album.json`.
-   4. Image height is not considered, since I'm assuming that most photos of an album will have "landscape" aspect ratio. This is of course a simplification and might not apply to your case.
-   5. There is no restriction on image file types/extension, anything your target browser supports works.
-7. Following the given examples, the final directory content should be:
+   1. Every image in `./public/albums/album1/3840` has a maximum width of 3840 pixels.
+   1. The file names must match the `file` property from `album.json`.
+   1. Image height is not considered, since I'm assuming that most photos of an album will have "landscape" aspect ratio. This is of course a simplification and might not apply to your case.
+   1. There is no restriction on image file types/extension, anything your target browser supports works.
+1. Following the given examples, the final directory content should be:
 
    ```
    public
@@ -63,19 +64,19 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
                    file-name-of-second-photo.jpg
    ```
 
-8. Create a production bundle with `npm run build` and deploy the entire content of `./build` to your web host. Note that your photos from `./public/albums` are *copied* into the `./build` directory.
-9. The default path for the app is `yourdomaingoeshere.com/photos`, this can be configured in `package.json` (`homepage` property).
-10. Loading `http[s]://yourdomaingoeshere.com/photos` will jump into the default album configured in `./src/config.ts`.
-11. Once any album is loaded, you can use a number of ways to cycle through the photos:
+1. Create a production bundle with `npm run build` and deploy the entire content of `./build` to your web host. Note that your photos from `./public/albums` are *copied* into the `./build` directory.
+1. The default path for the app is `yourdomaingoeshere.com/photos`, this can be configured in `package.json` (`homepage` property).
+1. Loading `http[s]://yourdomaingoeshere.com/photos` will jump into the default album configured in `./src/config.ts`.
+1. Once any album is loaded, you can use a number of ways to cycle through the photos:
     * Arrow keys
     * Mouse wheel
     * Clicking or tapping in the left or right half of the page
     * Swiping left or right with touch gestures
-12. The album will update the hash URL if you cycle to another photo. Examples:
+1. The album will update the hash URL if you cycle to another photo. Examples:
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-first-photo.jpg`
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-second-photo.jpg`
     * This allows sharing the URL to a specific photo
-13. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
+1. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
 
 ### Create a gallery with multiple albums from a directory containing sub-directories with images
 
