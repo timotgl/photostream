@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Slideshow from './Slideshow';
-import useAlbumContent from '../../hooks/useAlbumContent.ts';
+import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import { PhotoItem } from '../../types.ts';
 import { useHashLocation } from 'wouter/use-hash-location';

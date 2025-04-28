@@ -6,7 +6,7 @@ import Button from '../Button';
 import useAlbumStore from '../../store/useAlbumStore.ts';
 import { PhotoItem } from '../../types.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
-import useAlbumContent from '../../hooks/useAlbumContent.ts';
+import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 
 const hasLocation = (location: string) =>
   location && location !== 'Unbekannter Ort';

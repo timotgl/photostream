@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { AlbumContent } from '../types.ts';
-import useAlbumStore from '../store/useAlbumStore.ts';
+
+import { AlbumContent } from '../../types.ts';
+import useAlbumStore from '../useAlbumStore.ts';
 
 /**
  * Fetch an album's content (the array of photo items) once the component is mounted,
