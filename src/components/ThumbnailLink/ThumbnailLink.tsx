@@ -1,7 +1,7 @@
 import React from 'react';
 
-import css from './ThumbnailLink.module.css';
 import { useHashLocation } from 'wouter/use-hash-location';
+import css from './ThumbnailLink.module.css';
 
 type Props = {
   href: string;

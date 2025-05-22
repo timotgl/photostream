@@ -1,13 +1,13 @@
-import fs from 'fs/promises';
 import path from 'path';
+import fs from 'fs/promises';
 
-import type { PhotoFile } from './types.ts';
+import { Dirent } from 'node:fs';
 import {
   extractLastPathSegment,
   getFileExtension,
   removeSuffix,
 } from './helpers.ts';
-import { Dirent } from 'node:fs';
+import type { PhotoFile } from './types.ts';
 
 /**
  * TODO: document

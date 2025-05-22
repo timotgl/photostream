@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import './PhotoDetails.css';
-import useAlbumStore from '../../../store/useAlbumStore.ts';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
+import useAlbumStore from '../../../store/useAlbumStore.ts';
 import { PhotoItem } from '../../../types.ts';
 
 interface PhotoDetailsProps {

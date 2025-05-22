@@ -1,8 +1,8 @@
+import useAlbumStore from '../../store/useAlbumStore.ts';
 import { Album } from '../../types';
 import { buildPhotoThumbnailUrl } from '../../utils/urls';
 import GridContainer from '../GridContainer';
 import ThumbnailLink from '../ThumbnailLink';
-import useAlbumStore from '../../store/useAlbumStore.ts';
 
 const hasLocation = (location: string) =>
   location && location !== 'Unbekannter Ort';

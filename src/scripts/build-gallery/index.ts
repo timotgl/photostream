@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 
-import env from './env';
+import path from 'path';
 import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME } from '../../constants.ts';
 import { Album, AlbumContent } from '../../types.ts';
+import env from './env';
 import { isImageFile } from './helpers.ts';
-import path from 'path';
 
 console.log(`Scanning for photo albums in\n${env.SOURCE_DIR}`);
 const sourceDirEntries = await fs.readdir(env.SOURCE_DIR, {

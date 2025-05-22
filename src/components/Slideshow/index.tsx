@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useHashLocation } from 'wouter/use-hash-location';
 
-import Slideshow from './Slideshow';
-import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
+import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
+import Slideshow from './Slideshow';
 import { findPhotoIndexForFile } from './helpers.ts';
 
 const SlideShowWithHashLocation = () => {

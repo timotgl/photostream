@@ -1,10 +1,10 @@
 import React from 'react';
 
 import config from '../../config';
-import NavigationHelp from './NavigationHelp/NavigationHelp';
+import { onSingleTouchPoint, whileZoomedOut } from '../../utils/touchEvents';
 import Counter from './Counter';
+import NavigationHelp from './NavigationHelp/NavigationHelp';
 import PhotoDetails from './PhotoDetails';
-import { whileZoomedOut, onSingleTouchPoint } from '../../utils/touchEvents';
 
 import './Slideshow.css';
 import Button from '../Button';

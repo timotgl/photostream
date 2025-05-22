@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import './Counter.css';
-import useAlbumStore from '../../../store/useAlbumStore.ts';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
+import useAlbumStore from '../../../store/useAlbumStore.ts';
 
 interface CounterProps {
   currentPhotoIndex: number;

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
+import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
+import useAlbumStore from '../../store/useAlbumStore.ts';
+import AlbumList from '../AlbumList';
 import Album from '../AlbumView';
 import Slideshow from '../Slideshow';
-import AlbumList from '../AlbumList';
-import useAlbumStore from '../../store/useAlbumStore.ts';
-import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 
 const App = () => {
   const { albumName, file } = useAlbumAndFileHashLocation();

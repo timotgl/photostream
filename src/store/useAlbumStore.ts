@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { fetchAlbumContent, fetchAlbumDirectory } from '../utils/fetch.ts';
 import { AlbumWithContent } from '../types.ts';
+import { fetchAlbumContent, fetchAlbumDirectory } from '../utils/fetch.ts';
 
 export type AlbumState = {
   albumNamesInOrder: Array<string>;

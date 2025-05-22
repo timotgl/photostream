@@ -1,12 +1,12 @@
-import { PhotoFile } from './types.ts';
+import { PHOTO_WIDTHS } from '../../constants.ts';
+import { Album, AlbumDirectory, PhotoItem } from '../../types.ts';
+import env from './env.ts';
 import {
   convertImage,
   ensureDirectoryExists,
   removeSuffix,
 } from './helpers.ts';
-import env from './env.ts';
-import { PHOTO_WIDTHS } from '../../constants.ts';
-import { Album, AlbumDirectory, PhotoItem } from '../../types.ts';
+import { PhotoFile } from './types.ts';
 
 const albums: AlbumDirectory = [];
 const albumsSeen = new Set<string>();

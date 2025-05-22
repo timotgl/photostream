@@ -1,12 +1,12 @@
-import css from './AlbumView.module.css';
-import { buildPhotoThumbnailUrl } from '../../utils/urls';
-import GridContainer from '../GridContainer';
-import ThumbnailLink from '../ThumbnailLink';
-import Button from '../Button';
-import useAlbumStore from '../../store/useAlbumStore.ts';
-import { PhotoItem } from '../../types.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
+import useAlbumStore from '../../store/useAlbumStore.ts';
+import { PhotoItem } from '../../types.ts';
+import { buildPhotoThumbnailUrl } from '../../utils/urls';
+import Button from '../Button';
+import GridContainer from '../GridContainer';
+import ThumbnailLink from '../ThumbnailLink';
+import css from './AlbumView.module.css';
 
 const hasLocation = (location: string) =>
   location && location !== 'Unbekannter Ort';

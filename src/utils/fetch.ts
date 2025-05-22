@@ -1,5 +1,5 @@
 import config from '../config';
-import { AlbumDirectory, AlbumContent } from '../types';
+import { AlbumContent, AlbumDirectory } from '../types';
 
 export const fetchAlbumDirectory = async (): Promise<AlbumDirectory> => {
   try {
