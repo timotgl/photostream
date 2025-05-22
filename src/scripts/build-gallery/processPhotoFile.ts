@@ -6,7 +6,7 @@ import {
   ensureDirectoryExists,
   removeSuffix,
 } from './helpers.ts';
-import { PhotoFile } from './types.ts';
+import type { PhotoFile } from './types.ts';
 
 const albums: AlbumDirectory = [];
 const albumsSeen = new Set<string>();

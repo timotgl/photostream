@@ -1,7 +1,7 @@
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import useAlbumStore from '../../store/useAlbumStore.ts';
-import { PhotoItem } from '../../types.ts';
+import type { PhotoItem } from '../../types.ts';
 import { buildPhotoThumbnailUrl } from '../../utils/urls';
 import Button from '../Button';
 import GridContainer from '../GridContainer';
@@ -41,7 +41,7 @@ const AlbumView = () => {
   const content = useAlbumContent(name);
 
   return (
-    <div className={css.Container}>
+    <div>
       <header className={css.Header}>
         {/* TODO: use i18n */}
         <Button href="" text="← Alle Alben" />

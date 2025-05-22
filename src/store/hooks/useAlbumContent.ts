@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { AlbumContent } from '../../types.ts';
+import type { AlbumContent } from '../../types.ts';
 import useAlbumStore from '../useAlbumStore.ts';
 
 /**
@@ -11,12 +11,12 @@ const useAlbumContent = (albumName: string): AlbumContent => {
   const { content } = useAlbumStore((state) => state.albumByName[albumName]);
   const fetchAlbumContent = useAlbumStore((state) => state.fetchAlbumContent);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: effect only runs once
   useEffect(() => {
     if (!content.length) {
       // noinspection JSIgnoredPromiseFromCall
       fetchAlbumContent(albumName);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return content;

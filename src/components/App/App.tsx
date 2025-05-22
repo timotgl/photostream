@@ -14,12 +14,12 @@ const App = () => {
     (state) => state.fetchAlbumDirectory,
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: effect supposed to run only once
   useEffect(() => {
     if (!albumNamesInOrder.length) {
       // noinspection JSIgnoredPromiseFromCall
       fetchAlbumDirectory();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!albumNamesInOrder.length) {

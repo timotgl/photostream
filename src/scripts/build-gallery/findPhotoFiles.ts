@@ -1,7 +1,7 @@
-import path from 'path';
-import fs from 'fs/promises';
+import path from 'node:path';
+import fs from 'node:fs/promises';
 
-import { Dirent } from 'node:fs';
+import type { Dirent } from 'node:fs';
 import {
   IMAGE_FILE_EXTENSIONS,
   extractLastPathSegment,

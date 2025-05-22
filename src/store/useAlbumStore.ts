@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { AlbumWithContent } from '../types.ts';
+import type { AlbumWithContent } from '../types.ts';
 import { fetchAlbumContent, fetchAlbumDirectory } from '../utils/fetch.ts';
 
 export type AlbumState = {
@@ -32,10 +32,10 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
     set(() => {
       const albumNamesInOrder: Array<string> = [];
       const albumByName: Record<string, AlbumWithContent> = {};
-      albumDirectory.forEach((album) => {
+      for (const album of albumDirectory) {
         albumNamesInOrder.push(album.name);
         albumByName[album.name] = { ...album, content: [] };
-      });
+      }
       return {
         albumNamesInOrder,
         albumByName,

@@ -1,6 +1,6 @@
-import { spawn } from 'child_process';
-import { Dirent } from 'node:fs';
-import fs from 'fs/promises';
+import { spawn } from 'node:child_process';
+import type { Dirent } from 'node:fs';
+import fs from 'node:fs/promises';
 
 export const IMAGE_FILE_EXTENSIONS = new Set<string>([
   'tif',

@@ -18,10 +18,10 @@ interface Props {
 }
 
 enum Direction {
-  None,
-  Start,
-  Right,
-  Left,
+  None = 0,
+  Start = 1,
+  Right = 2,
+  Left = 3,
 }
 
 interface State {
@@ -44,10 +44,6 @@ class Slideshow extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
 
   state = initialState;
-
-  constructor(props: Props) {
-    super(props);
-  }
 
   componentDidMount(): void {
     // Arrow key navigation
@@ -118,7 +114,7 @@ class Slideshow extends React.PureComponent<Props, State> {
       }),
       () => {
         // eslint-disable-next-line react-x/no-access-state-in-setstate
-        document.body.style['opacity'] = String(this.state.swipeOpacity);
+        document.body.style.opacity = String(this.state.swipeOpacity);
       },
     );
 
@@ -195,7 +191,7 @@ class Slideshow extends React.PureComponent<Props, State> {
 
   resetSwiping = (): void => {
     this.setState(initialState, () => {
-      document.body.style['opacity'] = initialState.swipeOpacity.toString();
+      document.body.style.opacity = initialState.swipeOpacity.toString();
     });
   };
 

@@ -1,8 +1,8 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 
-import path from 'path';
+import path from 'node:path';
 import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME } from '../../constants.ts';
-import { Album, AlbumContent } from '../../types.ts';
+import type { Album, AlbumContent } from '../../types.ts';
 import env from './env';
 import { isImageFile } from './helpers.ts';
 
