@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import './Counter.css';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';

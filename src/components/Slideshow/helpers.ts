@@ -1,4 +1,4 @@
-import { PhotoItem } from '../../types.ts';
+import type { PhotoItem } from '../../types.ts';
 
 /**
  * Try to find the index of a photo item in the given array based on that photo's filename.

@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'development' && !isCurrentUrlCorrect) {
   // @ts-expect-error TS doesn't know that this works...
   window.location = requiredPathname as unknown as Location;
 } else {
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />

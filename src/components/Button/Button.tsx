@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { useHashLocation } from 'wouter/use-hash-location';
 
 import css from './Button.module.css';

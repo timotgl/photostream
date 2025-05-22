@@ -1,10 +1,6 @@
-interface TouchEventListener {
-  (event: TouchEvent): void;
-}
+type TouchEventListener = (event: TouchEvent) => void;
 
-interface SingleTouchpointListener {
-  (touch: Touch): void;
-}
+type SingleTouchpointListener = (touch: Touch) => void;
 
 export const whileZoomedOut = (
   callback: TouchEventListener,

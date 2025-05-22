@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import './PhotoDetails.css';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumStore from '../../../store/useAlbumStore.ts';
-import { PhotoItem } from '../../../types.ts';
+import type { PhotoItem } from '../../../types.ts';
 
 interface PhotoDetailsProps {
   currentPhotoIndex: number;

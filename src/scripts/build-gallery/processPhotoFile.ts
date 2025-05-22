@@ -1,5 +1,5 @@
 import { PHOTO_WIDTHS } from '../../constants.ts';
-import { Album, AlbumDirectory, PhotoItem } from '../../types.ts';
+import type { Album, AlbumDirectory, PhotoItem } from '../../types.ts';
 import env from './env.ts';
 import {
   convertImage,
