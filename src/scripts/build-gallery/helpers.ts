@@ -1,5 +1,18 @@
 import { spawn } from 'child_process';
 import fs from 'fs/promises';
+import { Dirent } from 'node:fs';
+
+const IMAGE_FILE_EXTENSIONS = new Set<string>([
+  'tif',
+  'tiff',
+  'bmp',
+  'jpg',
+  'jpeg',
+  'png',
+  'webp',
+  'heic',
+  'heif',
+]);
 
 export const getFileExtension = (fileName: string): string => {
   // Find the last occurrence of a dot (.)
@@ -12,6 +25,14 @@ export const getFileExtension = (fileName: string): string => {
 
   // Return the extension (everything after the last dot)
   return fileName.slice(lastDotIndex + 1);
+};
+
+export const isImageFile = (dirEnt: Dirent): boolean => {
+  if (!dirEnt.isFile()) {
+    return false;
+  }
+  const fileExtension = getFileExtension(dirEnt.name).toLowerCase();
+  return IMAGE_FILE_EXTENSIONS.has(fileExtension);
 };
 
 export const removeSuffix = (str: string, suffix: string) =>

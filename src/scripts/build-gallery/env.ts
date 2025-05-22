@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const ENV_VARS = ['SOURCE_DIR', 'DESTINATION_DIR', 'VITE_PUBLIC_URL'];
+const ENV_VARS = ['SOURCE_DIR', 'DESTINATION_DIR'];
 
 const env: Record<string, string> = {};
 

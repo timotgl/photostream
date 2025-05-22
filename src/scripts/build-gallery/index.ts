@@ -1,136 +1,56 @@
 import fs from 'fs/promises';
-import path from 'path';
 
 import env from './env';
-import type {
-  Album,
-  AlbumDirectory,
-  FileToPrepare,
-  PhotoItem,
-} from './types.ts';
-import {
-  getFileExtension,
-  removeSuffix,
-  convertImage,
-  ensureDirectoryExists,
-  extractLastPathSegment,
-} from './helpers.ts';
-import {
-  ALBUM_DIRECTORY_FILENAME,
-  ALBUM_FILENAME,
-  PHOTO_WIDTHS,
-} from '../../constants.ts';
+import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME } from '../../constants.ts';
+import { Album, AlbumContent } from '../../types.ts';
+import { isImageFile } from './helpers.ts';
+import path from 'path';
 
-export const IGNORE_FILES = new Set(['.DS_Store']);
+console.log(`Scanning for photo albums in\n${env.SOURCE_DIR}`);
+const sourceDirEntries = await fs.readdir(env.SOURCE_DIR, {
+  withFileTypes: true,
+});
+const albumDirEntries = sourceDirEntries.filter((file) => file.isDirectory());
+console.log(`Found ${albumDirEntries.length} albums.`);
 
-const getFiles = async (dir: string): Promise<Array<FileToPrepare>> => {
-  const files = await fs.readdir(dir, { withFileTypes: true });
-  let filesToPrepare: Array<FileToPrepare> = [];
+const albumNamesInOrder = albumDirEntries.map((entry) => entry.name);
+const albumByName: Record<string, Album> = {};
+const albumContentByAlbumName: Record<string, AlbumContent> = {};
 
-  const filteredFiles = files.filter((f) => !IGNORE_FILES.has(f.name));
-
-  for (const file of filteredFiles) {
-    const absolutePath = path.resolve(dir, file.name);
-    if (file.isDirectory()) {
-      filesToPrepare = filesToPrepare.concat(await getFiles(absolutePath));
-    } else {
-      const ext = getFileExtension(file.name);
-      const fileToPrepare: FileToPrepare = {
-        name: removeSuffix(file.name, `.${ext}`),
-        nameExt: file.name,
-        ext: ext.toLowerCase(),
-        dir: extractLastPathSegment(file.parentPath),
-        pathAbs: absolutePath,
-        pathRel: absolutePath.replace(env.SOURCE_DIR, ''),
-      };
-      filesToPrepare.push(fileToPrepare);
-    }
-  }
-  return filesToPrepare;
-};
-
-console.log(
-  `Scanning ${env.SOURCE_DIR} for files to prepare for webspace upload.`,
-);
-const filesToPrepare = await getFiles(env.SOURCE_DIR);
-
-console.log(`Found ${filesToPrepare.length} files to process.`);
-
-/**
- * TODO: this attempts to convert *every* file to JPG.
- * Check if file is actually an image (or do this filtering inside getFiles() above)
- * and if it is already a JPG, check if it needs resizing first.
- */
-const processFile = async (fileToPrepare: FileToPrepare): Promise<void> => {
-  const parentDirPathRel = removeSuffix(
-    fileToPrepare.pathRel,
-    fileToPrepare.nameExt,
+for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
+  console.log(
+    `Preparing album "${albumDirEntry.name}" (${albumIndex + 1}/${albumDirEntries.length})`,
   );
-  const parentDirPathAbs = `${env.DESTINATION_DIR}${parentDirPathRel}`;
-  await ensureDirectoryExists(parentDirPathAbs);
-
-  const convertedFileName = `${fileToPrepare.name}.jpg`;
-  console.log(`Converting ${fileToPrepare.pathAbs}`);
-  for (const photoWidth of PHOTO_WIDTHS) {
-    const photoWidthAbsPath = `${parentDirPathAbs}/${photoWidth}`;
-    await ensureDirectoryExists(photoWidthAbsPath);
-    const convertedFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
-    await convertImage(fileToPrepare.pathAbs, convertedFileAbsPath, photoWidth);
-  }
-
-  // Add album to album directory if that hasn't happened yet.
-  if (!albumsSeen.has(fileToPrepare.dir)) {
-    const album: Album = {
-      name: fileToPrepare.dir,
-      title: fileToPrepare.dir,
-      location: 'Unbekannter Ort',
-      date: 'Unbekanntes Datum',
-      file: convertedFileName,
-    };
-    albums.push(album);
-    albumsSeen.add(album.name);
-  }
-
-  // Save photo item to list for later creation of individual album.json.
-  if (!photoItemsByAlbumName[fileToPrepare.dir]) {
-    photoItemsByAlbumName[fileToPrepare.dir] = [];
-  }
-  const photoItem: PhotoItem = {
-    file: convertedFileName,
-    title: fileToPrepare.nameExt,
+  const { name: albumName } = albumDirEntry;
+  albumByName[albumName] = {
+    name: albumName,
+    title: albumName,
     location: 'Unbekannter Ort',
     date: 'Unbekanntes Datum',
+    file: '',
   };
-  photoItemsByAlbumName[fileToPrepare.dir].push(photoItem);
-};
 
-const albums: AlbumDirectory = [];
-const albumsSeen = new Set<string>();
-const photoItemsByAlbumName: Record<string, Array<PhotoItem>> = {};
+  const albumDirAbsPath = path.resolve(env.SOURCE_DIR, albumName);
+  const albumContent = (
+    await fs.readdir(albumDirAbsPath, {
+      withFileTypes: true,
+    })
+  ).filter((dirEntry) => isImageFile(dirEntry));
 
-/**
- * Loop over all files in source dir
- * if a file has the extension .tif, convert to jpg and compress it and copy it to the dest dir
- * otherwise, simply copy the file to dest dir.
- */
-for (const [index, fileToPrepare] of filesToPrepare.entries()) {
-  await processFile(fileToPrepare);
-  if (index + 1 < filesToPrepare.length) {
-    const numFilesLeft = filesToPrepare.length - index - 1;
-    console.log(`${numFilesLeft} files left to process.`);
+  for (const [photoIndex, photoDirEntry] of albumContent.entries()) {
+    console.log(
+      `Preparing photo "${photoDirEntry.name}" (${photoIndex + 1}/${albumContent.length})"`,
+    );
+
+    // ------> continue here
+    // TODO: call processPhotoFile() here or do what it does here.
   }
 }
 
-if (!albums.length) {
-  console.log(`No albums found.`);
-  process.exit(0);
-}
-
-console.log(
-  `Found ${albums.length} album(s). Writing "${ALBUM_DIRECTORY_FILENAME}".`,
-);
+console.log(`Writing album directory to "${ALBUM_DIRECTORY_FILENAME}".`);
 try {
   const albumDirFileAbsPath = `${env.DESTINATION_DIR}/${ALBUM_DIRECTORY_FILENAME}`;
+  const albums = albumNamesInOrder.map((albumName) => albumByName[albumName]);
   await fs.writeFile(
     albumDirFileAbsPath,
     JSON.stringify(albums, null, 2),
@@ -140,6 +60,8 @@ try {
 } catch (err) {
   console.error('Error writing file:', err);
 }
+
+process.exit(0);
 
 for (const albumName of Object.keys(photoItemsByAlbumName)) {
   console.log(`Writing ${ALBUM_FILENAME} for album "${albumName}".`);
