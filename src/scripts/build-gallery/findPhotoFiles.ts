@@ -3,6 +3,7 @@ import fs from 'fs/promises';
 
 import { Dirent } from 'node:fs';
 import {
+  IMAGE_FILE_EXTENSIONS,
   extractLastPathSegment,
   getFileExtension,
   removeSuffix,

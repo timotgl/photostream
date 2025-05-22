@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 import { Dirent } from 'node:fs';
 import fs from 'fs/promises';
 
-const IMAGE_FILE_EXTENSIONS = new Set<string>([
+export const IMAGE_FILE_EXTENSIONS = new Set<string>([
   'tif',
   'tiff',
   'bmp',
