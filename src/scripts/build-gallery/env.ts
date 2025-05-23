@@ -24,16 +24,22 @@ type Env = {
   SOURCE_DIR: string;
 
   /**
-   * Destination directory where album metadata and compressed images will be created.
-   * WARNING: This directory is assumed to be empty. If not, its contents could be overwritten.
+   * Destination directory where album metadata and compressed images will be
+   * created.
+   *
+   * WARNING: This directory is assumed to be empty. If not, its contents could
+   * be overwritten.
    */
   DESTINATION_DIR: string;
 
   /**
-   * Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
-   * Example: If this app is hosted on example.com, and VITE_PUBLIC_URL is "/photos", this app is expected under
-   * http(s)://example.com/photos
-   * Use an empty string here to expect the app under http(s)://example.com/ without any additional path.
+   * Relative URL segment that is appended to the hostname. Entry point to view
+   * the list of albums.
+   *
+   * Example: If this app is hosted on example.com, and VITE_PUBLIC_URL is
+   * "/photos", this app is expected under http(s)://example.com/photos
+   * Use an empty string here to expect the app under http(s)://example.com/
+   * without any additional path.
    */
   VITE_PUBLIC_URL: string;
 };

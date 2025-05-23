@@ -14,8 +14,8 @@ const photoItemsByAlbumName: Record<string, Array<PhotoItem>> = {};
 
 /**
  * TODO: this attempts to convert *every* file to JPG.
- * Check if file is actually an image (or do this filtering inside getFiles() above)
- * and if it is already a JPG, check if it needs resizing first.
+ * Check if file is actually an image (or do this filtering inside getFiles()
+ * above) and if it is already a JPG, check if it needs resizing first.
  */
 const processPhotoFile = async (fileToPrepare: PhotoFile): Promise<void> => {
   const parentDirPathRel = removeSuffix(

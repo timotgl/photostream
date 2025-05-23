@@ -18,7 +18,8 @@ export const getFileExtension = (fileName: string): string => {
   // Find the last occurrence of a dot (.)
   const lastDotIndex = fileName.lastIndexOf('.');
 
-  // No dot found, or the dot is at the start (hidden files) or end (invalid case)
+  // No dot found, or the dot is at the start (hidden files) or end
+  // (invalid case)
   if (lastDotIndex <= 0 || lastDotIndex === fileName.length - 1) {
     return '';
   }

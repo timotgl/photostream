@@ -19,7 +19,8 @@ const albumContentByAlbumName: Record<string, AlbumContent> = {};
 
 for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   console.log(
-    `Preparing album "${albumDirEntry.name}" (${albumIndex + 1}/${albumDirEntries.length})`,
+    `Preparing album "${albumDirEntry.name}" ` +
+      `(${albumIndex + 1}/${albumDirEntries.length})`,
   );
   const { name: albumName } = albumDirEntry;
   albumByName[albumName] = {
@@ -39,7 +40,8 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
 
   for (const [photoIndex, photoDirEntry] of albumContent.entries()) {
     console.log(
-      `Preparing photo "${photoDirEntry.name}" (${photoIndex + 1}/${albumContent.length})"`,
+      `Preparing photo "${photoDirEntry.name}" ` +
+        `(${photoIndex + 1}/${albumContent.length})"`,
     );
 
     // ------> continue here
