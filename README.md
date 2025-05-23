@@ -27,12 +27,17 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
 
 ## npm Scripts
 
- 1. `npm start` launches the vite dev server locally.
+### For development
+
+ 1. `npm start` launches the React app with vite dev server locally
+ 1. `npm run lint` lints the codebase with [biome](https://biomejs.dev/).
+ 1. `npm run check` lints, formats, and auto-fixes minor issues in the codebase with [biome](https://biomejs.dev/).
+
+### To build and deploy
+
  1. `npm run build-gallery` invokes a script that creates an image gallery with metadata. This gallery is the basis for the React app.
  1. `npm run build-app` builds the React app (including the image gallery) for deployment to your web host.
  1. `npm run preview` locally serves the app build.
- 1. `npm run lint` lints the codebase with [biome](https://biomejs.dev/).
- 1. `npm run check` lints, formats, and auto-fixes minor issues with [biome](https://biomejs.dev/).  
 
 ## Automatic image gallery creation
 
