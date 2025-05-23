@@ -4,7 +4,14 @@ import path from 'node:path';
 import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME } from '../../constants.ts';
 import type { Album, AlbumContent } from '../../types.ts';
 import env from './env';
-import { isImageFile } from './helpers.ts';
+import {
+  getFileExtension,
+  getFilenameWithoutExtension,
+  identifyImageDimensions,
+  isImageFile,
+} from './helpers.ts';
+import type { PhotoFile } from './types.ts';
+import processPhotoFile from './processPhotoFile.ts';
 
 console.log(`Scanning for photo albums in\n${env.SOURCE_DIR}`);
 const sourceDirEntries = await fs.readdir(env.SOURCE_DIR, {
@@ -39,13 +46,27 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   ).filter((dirEntry) => isImageFile(dirEntry));
 
   for (const [photoIndex, photoDirEntry] of albumContent.entries()) {
+    const photoAbsPath = `${photoDirEntry.parentPath}/${photoDirEntry.name}`;
+    const { width, height } = await identifyImageDimensions(photoAbsPath);
+
     console.log(
-      `Preparing photo "${photoDirEntry.name}" ` +
+      `  Preparing photo "${photoDirEntry.name}" ` +
+        `in ${width}x${height} ` +
         `(${photoIndex + 1}/${albumContent.length})"`,
     );
 
-    // ------> continue here
-    // TODO: call processPhotoFile() here or do what it does here.
+    const photoFile: PhotoFile = {
+      nameExt: photoDirEntry.name,
+      name: getFilenameWithoutExtension(photoDirEntry.name),
+      ext: getFileExtension(photoDirEntry.name).toLowerCase(),
+      dir: photoDirEntry.parentPath,
+      pathAbs: photoAbsPath,
+      pathRel: photoAbsPath.replace(env.SOURCE_DIR, ''),
+      width,
+    };
+
+    const photoItem = await processPhotoFile(photoFile);
+    console.log('    photoItem:', JSON.stringify(photoItem));
   }
 }
 

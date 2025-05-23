@@ -1,3 +1,11 @@
+export type ImageDimensions = {
+  // The width of the image in pixels
+  width: number;
+
+  // The height of the image in pixels
+  height: number;
+};
+
 export type PhotoFile = {
   // The name of the file including the extension
   nameExt: string;
@@ -16,4 +24,7 @@ export type PhotoFile = {
 
   // Path to the file, relative to the source dir
   pathRel: string;
+
+  // The width of the image in pixels
+  width: number;
 };
