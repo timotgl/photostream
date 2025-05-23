@@ -2,21 +2,47 @@
 
 ![Screenshot of app](public/screenshot.png 'Screenshot of app')
 
-A photo gallery JavaScript single page app built with React, Zustand, and Typescript.
+A photo gallery JavaScript single page app built with React and Typescript. Live demo available at [https://timotaglieber.de/photos](https://timotaglieber.de/photos).
 
-Hosted at https://timotaglieber.de/photos.
+## Prerequisites
 
-## Installation
+ 1. [Node.js](https://nodejs.org/) 23+
+ 2. [ GraphicsMagick](http://www.graphicsmagick.org/) if you want to use the `build-gallery` script. GraphicsMagick be installed via `brew install graphicsmagick` if you're on macOS and use [Homebrew](https://brew.sh/).
+
+## Install dependencies
 
 ```
 npm install
 ```
 
-Create a copy of the file `.env.example` and name it `.env`. Edit it and insert correct values for all env vars.
+## Configure gallery
 
-## Usage
+Create a copy of the file `.env.example` and name it `.env`. Edit it and insert correct values for all env vars. The first two are used by the `build-gallery` script, `VITE_PUBLIC_URL` is relevant for the single page app.
 
-1. Create an `albums` directory in `./public`
+ 1. `SOURCE_DIR`: Source directory containing all albums of the gallery as subdirectories.
+ 1. `DESTINATION_DIR`: Destination directory where album metadata and compressed images will be created. *Warning*: This directory is assumed to be empty. If not, its contents could be overwritten.
+ 1. `VITE_PUBLIC_URL`: Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
+    * Example: If this app is hosted on `example.com`, and `VITE_PUBLIC_URL` is `"/photos"`, this app is expected under
+`http(s)://example.com/photos`. Use an empty string (`""`) here to expect the app under `http(s)://example.com/` without any additional path. 
+
+## npm Scripts
+
+ 1. `npm start` launches the vite dev server locally.
+ 1. `npm run build-gallery` invokes a script that creates an image gallery with metadata. This gallery is the basis for the React app.
+ 1. `npm run build-app` builds the React app (including the image gallery) for deployment to your web host.
+ 1. `npm run preview` locally serves the app build.
+ 1. `npm run lint` lints the codebase with [biome](https://biomejs.dev/).
+ 1. `npm run check` lints, formats, and auto-fixes minor issues with [biome](https://biomejs.dev/).  
+
+## Automatic image gallery creation
+
+Create a gallery with multiple albums from a directory containing sub-directories with images. TODO.
+
+## Manual image gallery creation
+
+If you're not using the `build-gallery` script, the following steps set up everything manually.
+
+1. Create an `albums` directory inside the `./public` folder.
 1. For each album you'd like to host, create a directory inside `./public/albums`, for example `./public/albums/album1`.
 1. TODO explain how to create `albums.json`.
 1. Create a .json file listing the album content: `./public/albums/album1/album.json`.
@@ -78,16 +104,3 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
     * This allows sharing the URL to a specific photo
 1. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
 
-### Create a gallery with multiple albums from a directory containing sub-directories with images
-
-TODO
-
-## Questions and answers
-
-### Why the whole frontend stack for such a simple app?
-
-I'm using this project as a learning playground for frontend stuff. It works better for me to have an actual use case when doing that (hosting my own photos). There used to be a 200 line vanilla JS version, but it didn't support multiple albums.
-
-### There are so many ways to host and share images, why create yet another app that does the same?
-
-I didn't like the UI of any photo gallery I've come across and wanted to create something that is simple, clean, and focused. Plus the combination of a learning project and an actual personal use case.
