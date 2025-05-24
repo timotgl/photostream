@@ -23,6 +23,7 @@ export type PhotoItem = {
   location: string;
   date: string;
   caption?: string;
+  width: number;
 };
 
 export type AlbumContent = Array<PhotoItem>;

@@ -11,7 +11,7 @@ import {
   isImageFile,
 } from './helpers.ts';
 import type { PhotoFile } from './types.ts';
-import processPhotoFile from './processPhotoFile.ts';
+import createPhotoItem from './createPhotoItem.ts';
 
 console.log(`Scanning for photo albums in\n${env.SOURCE_DIR}`);
 const sourceDirEntries = await fs.readdir(env.SOURCE_DIR, {
@@ -22,7 +22,6 @@ console.log(`Found ${albumDirEntries.length} albums.`);
 
 const albumNamesInOrder = albumDirEntries.map((entry) => entry.name);
 const albumByName: Record<string, Album> = {};
-const albumContentByAlbumName: Record<string, AlbumContent> = {};
 
 for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   console.log(
@@ -39,20 +38,21 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   };
 
   const albumDirAbsPath = path.resolve(env.SOURCE_DIR, albumName);
-  const albumContent = (
+  const albumDirContent = (
     await fs.readdir(albumDirAbsPath, {
       withFileTypes: true,
     })
   ).filter((dirEntry) => isImageFile(dirEntry));
 
-  for (const [photoIndex, photoDirEntry] of albumContent.entries()) {
+  const albumContent: AlbumContent = [];
+  for (const [photoIndex, photoDirEntry] of albumDirContent.entries()) {
     const photoAbsPath = `${photoDirEntry.parentPath}/${photoDirEntry.name}`;
     const { width, height } = await identifyImageDimensions(photoAbsPath);
 
     console.log(
       `  Preparing photo "${photoDirEntry.name}" ` +
         `in ${width}x${height} ` +
-        `(${photoIndex + 1}/${albumContent.length})"`,
+        `(${photoIndex + 1}/${albumDirContent.length})"`,
     );
 
     const photoFile: PhotoFile = {
@@ -65,8 +65,28 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
       width,
     };
 
-    const photoItem = await processPhotoFile(photoFile);
+    const photoItem = await createPhotoItem(photoFile);
     console.log('    photoItem:', JSON.stringify(photoItem));
+    albumContent.push(photoItem);
+
+    if (photoIndex === 0) {
+      // Use the album's first image as thumbnail for the album overview.
+      albumByName[albumName].file = photoItem.file;
+    }
+  }
+
+  console.log(`Writing ${ALBUM_FILENAME} for album "${albumName}".`);
+  try {
+    const albumFileAbsPath = `${env.DESTINATION_DIR}/${albumName}/${ALBUM_FILENAME}`;
+    console.log('albumFileAbsPath:', albumFileAbsPath);
+    await fs.writeFile(
+      albumFileAbsPath,
+      JSON.stringify(albumContent, null, 2),
+      'utf8',
+    );
+    console.log('File written successfully.');
+  } catch (err) {
+    console.error('Error writing file:', err);
   }
 }
 
@@ -82,22 +102,4 @@ try {
   console.log('File written successfully.');
 } catch (err) {
   console.error('Error writing file:', err);
-}
-
-process.exit(0);
-
-for (const albumName of Object.keys(photoItemsByAlbumName)) {
-  console.log(`Writing ${ALBUM_FILENAME} for album "${albumName}".`);
-  try {
-    const albumFileAbsPath = `${env.DESTINATION_DIR}/${albumName}/${ALBUM_FILENAME}`;
-    console.log('albumFileAbsPath:', albumFileAbsPath);
-    await fs.writeFile(
-      albumFileAbsPath,
-      JSON.stringify(photoItemsByAlbumName[albumName], null, 2),
-      'utf8',
-    );
-    console.log('File written successfully.');
-  } catch (err) {
-    console.error('Error writing file:', err);
-  }
 }
