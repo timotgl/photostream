@@ -5,6 +5,8 @@ import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import Slideshow from './Slideshow';
 import { findPhotoIndexForFile } from './helpers.ts';
+import config from '../../config.ts';
+import { PHOTO_WIDTHS_DESC, PHOTOW_WIDTH_TN } from '../../constants.ts';
 
 const SlideShowWithHashLocation = () => {
   const { albumName, file } = useAlbumAndFileHashLocation();
@@ -47,10 +49,19 @@ const SlideShowWithHashLocation = () => {
     updateFileHashLocation(previousPhotoIndex);
   };
 
+  // Find the maximum available width version of the current photo.
+  const photoItem = albumContent[currentPhotoIndex];
+  const maxAvailableWidth = PHOTO_WIDTHS_DESC.find(
+    (width, index) =>
+      config.PHOTO_WIDTH >= width &&
+      photoItem?.width > PHOTO_WIDTHS_DESC[index + 1],
+  );
+
   return (
     <Slideshow
       albumName={albumName}
       file={file}
+      maxAvailableWidth={maxAvailableWidth || PHOTOW_WIDTH_TN}
       currentPhotoIndex={currentPhotoIndex}
       showNextPhoto={showNextPhoto}
       showPreviousPhoto={showPreviousPhoto}

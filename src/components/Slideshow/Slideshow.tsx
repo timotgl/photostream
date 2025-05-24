@@ -12,6 +12,7 @@ import Button from '../Button';
 interface Props {
   albumName: string;
   file: string;
+  maxAvailableWidth: number;
   currentPhotoIndex: number;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
@@ -209,6 +210,7 @@ class Slideshow extends React.PureComponent<Props, State> {
     const {
       albumName,
       file,
+      maxAvailableWidth,
       currentPhotoIndex,
       showNextPhoto,
       showPreviousPhoto,
@@ -223,7 +225,7 @@ class Slideshow extends React.PureComponent<Props, State> {
       ArrowDown: showPreviousPhoto,
     };
 
-    const url = `${config.ALBUM_ROOT}/${albumName}/${config.PHOTO_WIDTH}/${file}`;
+    const url = `${config.ALBUM_ROOT}/${albumName}/${maxAvailableWidth}/${file}`;
     const style = file ? { backgroundImage: `url('${url}')` } : {};
 
     return (
