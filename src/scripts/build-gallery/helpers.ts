@@ -49,19 +49,19 @@ export const removeSuffix = (str: string, suffix: string) =>
   str.endsWith(suffix) ? str.slice(0, -suffix.length) : str;
 
 /**
- * Convert an image using GraphicsMagick.
+ * Convert and resize an image using GraphicsMagick.
  */
 export const convertImage = (
   input: string,
   output: string,
-  width: number,
+  width?: number,
 ): Promise<string> =>
   new Promise((resolve, reject) => {
+    const resizeArgs = width ? ['-resize', width.toString()] : [];
     const args = [
       'convert',
       input,
-      '-resize',
-      width.toString(),
+      ...resizeArgs,
       '-quality',
       '90',
       '-auto-orient',

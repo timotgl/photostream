@@ -23,35 +23,50 @@ const processPhotoFile = async (
   await ensureDirectoryExists(parentDirPathAbs);
 
   const convertedFileName = `${fileToPrepare.name}.jpg`;
-  for (const photoWidth of PHOTO_WIDTHS) {
-    console.log(`    ${photoWidth}`);
-    const photoWidthAbsPath = `${parentDirPathAbs}/${photoWidth}`;
+
+  // ----> CONTINUE HERE
+  // case 1: jpg and not bigger than current width: copy
+  // case 2: jpg and bigger than current width: resize
+  // case 3: not a jpg and not bigger than current width: convert
+  // case 4: not a jpg and bigger than current width: convert and resize
+
+  // [480, 1920, 3840]
+
+  // filteToPrepare.width = jpg, 479 width
+  // --> copy to 480, exit loop, higher widths not relevant
+
+  // filteToPrepare.width = jpg, 481 width
+  // --> resize to 480, copy to 1920, exit loop, higher widths not relevant
+
+  // filteToPrepare.width = tif, 479 width
+  // --> convert to jpg, copy to 480, exit loop, higher widths not relevant
+
+  // filteToPrepare.width = tif, 481 width
+  // --> convert to jpg, resize to 480, copy to 1920, exit loop, higher widths not relevant
+
+  for (const targetWidth of PHOTO_WIDTHS) {
+    console.log(`    ${targetWidth}`);
+    const photoWidthAbsPath = `${parentDirPathAbs}${targetWidth}`;
     await ensureDirectoryExists(photoWidthAbsPath);
-    const convertedFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
+    const targetFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
 
-    /*
-    await convertImage(
-      fileToPrepare.pathAbs,
-      convertedFileAbsPath,
-      photoWidth,
-    );
-    */
-
-    // ----> CONTINUE HERE
-    if (fileToPrepare.width > photoWidth) {
-      console.log(`      Need to scale down to width ${photoWidth}`);
-      if (fileToPrepare.ext === 'jpg') {
-        console.log('      file is a jpg');
-      } else {
-        console.log('      file is not a jpg and will need conversion');
-      }
+    if (fileToPrepare.width > targetWidth) {
+      console.log(`      Need to scale down to width ${targetWidth}`);
+      await convertImage(fileToPrepare.pathAbs, targetFileAbsPath, targetWidth);
     } else {
-      console.log(`      No need to scale width down to ${photoWidth} `);
       if (fileToPrepare.ext === 'jpg') {
         console.log('      file is a jpg');
+        console.log(
+          `      No need to scale width down to ${targetWidth}. Simply copy file.`,
+        );
+        await fs.copyFile(fileToPrepare.pathAbs, targetFileAbsPath);
       } else {
         console.log('      file is not a jpg and will need conversion');
+        console.log(`      No need to scale width down to ${targetWidth} `);
+        await convertImage(fileToPrepare.pathAbs, targetFileAbsPath);
       }
+
+      break; // no need to handle larger widths
     }
   }
 
