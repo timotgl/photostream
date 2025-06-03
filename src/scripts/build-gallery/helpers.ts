@@ -15,6 +15,14 @@ export const IMAGE_FILE_EXTENSIONS = new Set<string>([
   'heif',
 ]);
 
+export const isImageFile = (dirEnt: Dirent): boolean => {
+  if (!dirEnt.isFile()) {
+    return false;
+  }
+  const fileExtension = getFileExtension(dirEnt.name).toLowerCase();
+  return IMAGE_FILE_EXTENSIONS.has(fileExtension);
+};
+
 export const getFileExtension = (fileName: string): string => {
   // Find the last occurrence of a dot (.)
   const lastDotIndex = fileName.lastIndexOf('.');
@@ -35,14 +43,6 @@ export const getFilenameWithoutExtension = (fileName: string): string => {
     return fileName;
   }
   return fileName.slice(0, lastDotIndex);
-};
-
-export const isImageFile = (dirEnt: Dirent): boolean => {
-  if (!dirEnt.isFile()) {
-    return false;
-  }
-  const fileExtension = getFileExtension(dirEnt.name).toLowerCase();
-  return IMAGE_FILE_EXTENSIONS.has(fileExtension);
 };
 
 export const removeSuffix = (str: string, suffix: string) =>
