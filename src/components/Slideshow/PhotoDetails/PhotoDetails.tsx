@@ -17,6 +17,7 @@ const PlaceholderPhotoItem: PhotoItem = {
   location: '',
   date: '',
   caption: '',
+  width: 0,
 };
 
 const PhotoDetails: React.FC<PhotoDetailsProps> = ({
