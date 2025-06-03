@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useHashLocation } from 'wouter/use-hash-location';
 
+import config from '../../config.ts';
+import { PHOTOW_WIDTH_TN, PHOTO_WIDTHS_DESC } from '../../constants.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import Slideshow from './Slideshow';
 import { findPhotoIndexForFile } from './helpers.ts';
-import config from '../../config.ts';
-import { PHOTO_WIDTHS_DESC, PHOTOW_WIDTH_TN } from '../../constants.ts';
 
 const SlideShowWithHashLocation = () => {
   const { albumName, file } = useAlbumAndFileHashLocation();

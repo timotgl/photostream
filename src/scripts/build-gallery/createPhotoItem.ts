@@ -1,4 +1,6 @@
+import fs from 'node:fs/promises';
 import { PHOTO_WIDTHS } from '../../constants.ts';
+import type { PhotoItem } from '../../types.ts';
 import env from './env.ts';
 import {
   convertImage,
@@ -6,8 +8,6 @@ import {
   removeSuffix,
 } from './helpers.ts';
 import type { PhotoFile } from './types.ts';
-import type { PhotoItem } from '../../types.ts';
-import fs from 'node:fs/promises';
 
 /**
  * Convert and resize a given photo file. Return a PhotoItem object.

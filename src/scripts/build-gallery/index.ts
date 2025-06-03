@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ALBUM_DIRECTORY_FILENAME, ALBUM_FILENAME } from '../../constants.ts';
 import type { Album, AlbumContent } from '../../types.ts';
+import createPhotoItem from './createPhotoItem.ts';
 import env from './env';
 import {
   getFileExtension,
@@ -11,7 +12,6 @@ import {
   isImageFile,
 } from './helpers.ts';
 import type { PhotoFile } from './types.ts';
-import createPhotoItem from './createPhotoItem.ts';
 
 console.log(`Scanning for photo albums in\n${env.SOURCE_DIR}`);
 const sourceDirEntries = await fs.readdir(env.SOURCE_DIR, {
