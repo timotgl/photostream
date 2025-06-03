@@ -27,7 +27,6 @@ const createPhotoItem = async (
 
   const convertedFileName = `${fileToPrepare.name}.jpg`;
   for (const targetWidth of PHOTO_WIDTHS) {
-    console.log(`    ${targetWidth}`);
     const photoWidthAbsPath = `${parentDirPathAbs}${targetWidth}`;
     await ensureDirectoryExists(photoWidthAbsPath);
     const targetFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
