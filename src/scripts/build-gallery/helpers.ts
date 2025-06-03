@@ -146,11 +146,3 @@ export const ensureDirectoryExists = async (dirPath: string): Promise<void> => {
     console.error(`Error creating directory: ${(err as Error).message}`);
   }
 };
-
-export const extractLastPathSegment = (path: string): string => {
-  const segments = path.split('/');
-  if (!segments.length) {
-    return '';
-  }
-  return segments[segments.length - 1];
-};
