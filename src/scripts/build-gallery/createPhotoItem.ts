@@ -33,18 +33,11 @@ const createPhotoItem = async (
     const targetFileAbsPath = `${photoWidthAbsPath}/${convertedFileName}`;
 
     if (fileToPrepare.width > targetWidth) {
-      console.log(`      Need to scale down to width ${targetWidth}`);
       await convertImage(fileToPrepare.pathAbs, targetFileAbsPath, targetWidth);
     } else {
       if (fileToPrepare.ext === 'jpg') {
-        console.log('      file is a jpg');
-        console.log(
-          `      No need to scale width down to ${targetWidth}. Simply copy file.`,
-        );
         await fs.copyFile(fileToPrepare.pathAbs, targetFileAbsPath);
       } else {
-        console.log('      file is not a jpg and will need conversion');
-        console.log(`      No need to scale width down to ${targetWidth} `);
         await convertImage(fileToPrepare.pathAbs, targetFileAbsPath);
       }
 

@@ -66,7 +66,6 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
     };
 
     const photoItem = await createPhotoItem(photoFile);
-    console.log('    photoItem:', JSON.stringify(photoItem));
     albumContent.push(photoItem);
 
     if (photoIndex === 0) {
@@ -78,7 +77,6 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   console.log(`Writing ${ALBUM_FILENAME} for album "${albumName}".`);
   try {
     const albumFileAbsPath = `${env.DESTINATION_DIR}/${albumName}/${ALBUM_FILENAME}`;
-    console.log('albumFileAbsPath:', albumFileAbsPath);
     await fs.writeFile(
       albumFileAbsPath,
       JSON.stringify(albumContent, null, 2),
