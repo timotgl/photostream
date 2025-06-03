@@ -32,6 +32,7 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
  1. `npm start` launches the React app with vite dev server locally
  1. `npm run lint` lints the codebase with [biome](https://biomejs.dev/).
  1. `npm run check` lints, formats, and auto-fixes minor issues in the codebase with [biome](https://biomejs.dev/).
+ 1. `npm run types` check codebase for typescript errors. 
 
 ### To build and deploy
 
