@@ -7,7 +7,7 @@ A photo gallery JavaScript single page app built with React and Typescript. Live
 ## Prerequisites
 
  1. [Node.js](https://nodejs.org/) 23+
- 2. [ GraphicsMagick](http://www.graphicsmagick.org/) if you want to use the `build-gallery` script. GraphicsMagick be installed via `brew install graphicsmagick` if you're on macOS and use [Homebrew](https://brew.sh/).
+ 2. [ GraphicsMagick](http://www.graphicsmagick.org/) if you want to use the `build-gallery` script. GraphicsMagick can be installed via `brew install graphicsmagick` if you're on macOS and use [Homebrew](https://brew.sh/).
 
 ## Install dependencies
 
@@ -35,8 +35,8 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
 
 ### To build and deploy
 
- 1. `npm run build-gallery` invokes a script that creates an image gallery with metadata. This gallery is the basis for the React app.
- 1. `npm run build-app` builds the React app (including the image gallery) for deployment to your web host.
+ 1. `npm run build:gallery` invokes a script that creates an image gallery with metadata. This gallery is the basis for the React app.
+ 1. `npm run build:app` builds the React app (including the image gallery) for deployment to your web host.
  1. `npm run preview` locally serves the app build.
 
 ## Automatic image gallery creation

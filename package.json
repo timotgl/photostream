@@ -8,8 +8,8 @@
     "start": "vite",
     "lint": "./node_modules/@biomejs/biome/bin/biome lint src",
     "check": "./node_modules/@biomejs/biome/bin/biome check --write src",
-    "build-gallery": "./node_modules/vite-node/vite-node.mjs src/scripts/build-gallery/index.ts",
-    "build-app": "tsc -b && vite build",
+    "build:gallery": "./node_modules/vite-node/vite-node.mjs src/scripts/build-gallery/index.ts",
+    "build:app": "tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
