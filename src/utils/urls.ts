@@ -1,5 +1,5 @@
 import config from '../config';
+import { PHOTOW_WIDTH_TN } from '../constants';
 
-// TODO: handle different resolutions
 export const buildPhotoThumbnailUrl = (albumName: string, file: string) =>
-  `${config.ALBUM_ROOT}/${albumName}/480/${file}`;
+  `${config.ALBUM_ROOT}/${albumName}/${PHOTOW_WIDTH_TN}/${file}`;
