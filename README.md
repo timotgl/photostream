@@ -105,6 +105,8 @@ If you're not using the `build-gallery` script, the following steps set up every
                    file-name-of-second-photo.jpg
    ```
 
+## Build and deploy
+
 1. Create a production bundle with `npm run build` and deploy the entire content of `./build` to your web host. Note that your photos from `./public/albums` are *copied* into the `./build` directory.
 1. The default path for the app is `yourdomaingoeshere.com/photos`, this can be configured in `package.json` (`homepage` property).
 1. Loading `http[s]://yourdomaingoeshere.com/photos` will jump into the default album configured in `./src/config.ts`.
