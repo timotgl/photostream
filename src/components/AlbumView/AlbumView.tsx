@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import useAlbumStore from '../../store/useAlbumStore.ts';
@@ -8,23 +10,22 @@ import GridContainer from '../GridContainer';
 import ThumbnailLink from '../ThumbnailLink';
 import css from './AlbumView.module.css';
 
-const hasLocation = (location: string) =>
-  location && location !== 'Unbekannter Ort';
-const hasDate = (date: string) => date && date !== 'Unbekanntes Datum';
+const hasLocation = (location: string, t: (key: string) => string) =>
+  location && location !== t('PhotoData.unknownLocation');
+const hasDate = (date: string, t: (key: string) => string) =>
+  date && date !== t('PhotoData.unknownDate');
 
-const formatCaption = ({
-  title,
-  location,
-  date,
-  caption,
-}: PhotoItem): string => {
+const formatCaption = (
+  { title, location, date, caption }: PhotoItem,
+  t: (key: string) => string,
+): string => {
   const segments = [title];
-  if (hasLocation(location) || hasDate(date)) {
+  if (hasLocation(location, t) || hasDate(date, t)) {
     segments.push(' (');
-    if (hasLocation(location)) {
+    if (hasLocation(location, t)) {
       segments.push(location);
     }
-    if (hasDate(date)) {
+    if (hasDate(date, t)) {
       segments.push(` - ${date}`);
     }
     segments.push(')');
@@ -36,6 +37,7 @@ const formatCaption = ({
 };
 
 const AlbumView = () => {
+  const { t } = useTranslation();
   const { albumName: name } = useAlbumAndFileHashLocation();
   const album = useAlbumStore((state) => state.albumByName[name]);
   const content = useAlbumContent(name);
@@ -43,10 +45,10 @@ const AlbumView = () => {
   return (
     <div>
       <header className={css.Header}>
-        {/* TODO: use i18n */}
-        <Button href="" text="← Alle Alben" />
-        {/* TODO: use i18n */}
-        <h1 className={css.Title}>{album?.title || 'Lade Album...'}</h1>
+        <Button href="" text={t('AlbumView.allAlbums')} />
+        <h1 className={css.Title}>
+          {album?.title || t('AlbumView.loadingAlbum')}
+        </h1>
       </header>
       <GridContainer>
         {content.map((photoItem) => (
@@ -55,7 +57,7 @@ const AlbumView = () => {
             href={`${name}/${photoItem.file}`}
             imageSrc={buildPhotoThumbnailUrl(name, photoItem.file)}
             title={photoItem.title}
-            caption={formatCaption(photoItem)}
+            caption={formatCaption(photoItem, t)}
             captionOnHoverOnly
           />
         ))}

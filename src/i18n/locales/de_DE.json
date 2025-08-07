@@ -1,0 +1,19 @@
+{
+  "App": {
+    "loadingDirectory": "Lade Albumverzeichnis"
+  },
+  "AlbumView": {
+    "allAlbums": "← Alle Alben",
+    "loadingAlbum": "Lade Album..."
+  },
+  "Slideshow": {
+    "albumOverview": "← Album-Übersicht"
+  },
+  "NavigationHelp": {
+    "instructions": "Verwende Klick, Wischen links/rechts, Pfeiltasten oder Mausrad um durch die Fotos zu blättern"
+  },
+  "PhotoData": {
+    "unknownLocation": "Unbekannter Ort",
+    "unknownDate": "Unbekanntes Datum"
+  }
+}

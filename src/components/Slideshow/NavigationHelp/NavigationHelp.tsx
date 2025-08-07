@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import './NavigationHelp.css';
 
@@ -7,6 +8,7 @@ type Props = {
 };
 
 const NavigationHelp = ({ hideAfter }: Props) => {
+  const { t } = useTranslation();
   const [className, setClassName] = useState('');
   useEffect(() => {
     setTimeout(() => {
@@ -15,9 +17,7 @@ const NavigationHelp = ({ hideAfter }: Props) => {
   }, [hideAfter]);
   return (
     <div id="navigationHelp" className={className}>
-      <h1>
-        Use click, swipe left/right, arrow keys, or mouse wheel to browse photos
-      </h1>
+      <h1>{t('NavigationHelp.instructions')}</h1>
     </div>
   );
 };

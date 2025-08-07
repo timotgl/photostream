@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumStore from '../../store/useAlbumStore.ts';
@@ -7,6 +8,7 @@ import Album from '../AlbumView';
 import Slideshow from '../Slideshow';
 
 const App = () => {
+  const { t } = useTranslation();
   const { albumName, file } = useAlbumAndFileHashLocation();
 
   const albumNamesInOrder = useAlbumStore((state) => state.albumNamesInOrder);
@@ -23,7 +25,7 @@ const App = () => {
   }, []);
 
   if (!albumNamesInOrder.length) {
-    return <div>Fetching album directory</div>;
+    return <div>{t('App.loadingDirectory')}</div>;
   }
 
   if (!albumName) {

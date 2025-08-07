@@ -32,8 +32,8 @@ for (const [albumIndex, albumDirEntry] of albumDirEntries.entries()) {
   albumByName[albumName] = {
     name: albumName,
     title: albumName,
-    location: 'Unbekannter Ort',
-    date: 'Unbekanntes Datum',
+    location: 'Unknown Location',
+    date: 'Unknown Date',
     file: '',
   };
 

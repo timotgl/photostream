@@ -16,6 +16,7 @@ interface Props {
   currentPhotoIndex: number;
   showNextPhoto: () => void;
   showPreviousPhoto: () => void;
+  t: (key: string) => string;
 }
 
 enum Direction {
@@ -214,6 +215,7 @@ class Slideshow extends React.PureComponent<Props, State> {
       currentPhotoIndex,
       showNextPhoto,
       showPreviousPhoto,
+      t,
     } = this.props;
 
     // next/previous functions are re-created after a new photo is shown,
@@ -230,10 +232,9 @@ class Slideshow extends React.PureComponent<Props, State> {
 
     return (
       <div className="App" style={style}>
-        {/* TODO: use i18n */}
         <Button
           href={albumName}
-          text="← Album-Übersicht"
+          text={t('Slideshow.albumOverview')}
           className="BackButton"
         />
         <NavigationHelp hideAfter={config.FADE_IN_DURATION} />

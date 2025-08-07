@@ -47,8 +47,8 @@ const createPhotoItem = async (
   return {
     file: convertedFileName,
     title: fileToPrepare.nameExt,
-    location: 'Unbekannter Ort',
-    date: 'Unbekanntes Datum',
+    location: 'Unknown Location',
+    date: 'Unknown Date',
     width: fileToPrepare.width,
   };
 };

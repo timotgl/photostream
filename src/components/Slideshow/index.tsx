@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHashLocation } from 'wouter/use-hash-location';
 
 import config from '../../config.ts';
@@ -9,6 +10,7 @@ import Slideshow from './Slideshow';
 import { findPhotoIndexForFile } from './helpers.ts';
 
 const SlideShowWithHashLocation = () => {
+  const { t } = useTranslation();
   const { albumName, file } = useAlbumAndFileHashLocation();
   const [, navigate] = useHashLocation();
   const albumContent = useAlbumContent(albumName);
@@ -65,6 +67,7 @@ const SlideShowWithHashLocation = () => {
       currentPhotoIndex={currentPhotoIndex}
       showNextPhoto={showNextPhoto}
       showPreviousPhoto={showPreviousPhoto}
+      t={t}
     />
   );
 };

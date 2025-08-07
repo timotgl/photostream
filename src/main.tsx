@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from './components/App';
 import config from './config';
+import './i18n'; // Initialize i18next
 
 import './global.css';
 
