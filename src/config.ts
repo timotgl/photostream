@@ -12,6 +12,9 @@ type Config = {
   // Use an empty string here to expect the app under http(s)://example.com/ without any additional path.
   VITE_PUBLIC_URL: string;
 
+  // Locale for the application (en-US, de-DE)
+  LOCALE: string;
+
   // Relative URL of the directory containing photo albums, each in different widths
   ALBUM_ROOT: string;
 
@@ -36,6 +39,7 @@ type Config = {
 
 const config: Config = {
   VITE_PUBLIC_URL: import.meta.env.VITE_PUBLIC_URL,
+  LOCALE: import.meta.env.VITE_LOCALE,
   ALBUM_ROOT: 'albums',
   ALBUM_DIRECTORY_FILENAME,
   ALBUM_FILENAME,

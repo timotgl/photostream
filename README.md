@@ -17,13 +17,14 @@ npm install
 
 ## Configure gallery
 
-Create a copy of the file `.env.example` and name it `.env`. Edit it and insert correct values for all env vars. The first two are used by the `build-gallery` script, `VITE_PUBLIC_URL` is relevant for the single page app.
+Create a copy of the file `.env.example` and name it `.env`. Edit it and insert correct values for all env vars. The first two are used by the `build-gallery` script, `VITE_PUBLIC_URL` and `VITE_LOCALE` are relevant for the single page app.
 
  1. `SOURCE_DIR`: Source directory containing all albums of the gallery as subdirectories.
  1. `DESTINATION_DIR`: Destination directory where album metadata and compressed images will be created. *Warning*: This directory is assumed to be empty. If not, its contents could be overwritten.
  1. `VITE_PUBLIC_URL`: Relative URL segment that is appended to the hostname. Entry point to view the list of albums.
     * Example: If this app is hosted on `example.com`, and `VITE_PUBLIC_URL` is `"/photos"`, this app is expected under
-`http(s)://example.com/photos`. Use an empty string (`""`) here to expect the app under `http(s)://example.com/` without any additional path. 
+`http(s)://example.com/photos`. Use an empty string (`""`) here to expect the app under `http(s)://example.com/` without any additional path.
+ 1. `VITE_LOCALE`: Locale for the UI. Supported values: `en-US`, `de-DE`. Defaults to `en-US` if not specified. 
 
 ## npm Scripts
 
