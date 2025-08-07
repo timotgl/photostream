@@ -76,10 +76,12 @@ If you're not using the `build-gallery` script, the following steps set up every
    ]
    ```
    - The first element of the array is the first photo that is shown in the app (the counter in the upper right corner will show `1/X`).
-1. Create directories for the two supported maximum image widths in `./public/albums/album1`:
+1. Create directories for the three supported maximum image widths in `./public/albums/album1`:
+   1. `./public/albums/album1/480` (for thumbnails)
    1. `./public/albums/album1/1920` and
    1. `./public/albums/album1/3840`
-1. `1920` and `3840` are expected to contain the same number of files and the same file names, but each has the images scaled down:
+1. `480`, `1920` and `3840` are expected to contain the same number of files and the same file names, but each has the images scaled down:
+   1. Every image in `./public/albums/album1/480` has a maximum width of 480 pixels (used for thumbnails).
    1. Every image in `./public/albums/album1/1920` has a maximum width of 1920 pixels.
    1. Every image in `./public/albums/album1/3840` has a maximum width of 3840 pixels.
    1. The file names must match the `file` property from `album.json`.
@@ -92,6 +94,9 @@ If you're not using the `build-gallery` script, the following steps set up every
        albums
            album1
                album.json
+               480
+                   file-name-of-first-photo.jpg
+                   file-name-of-second-photo.jpg
                1920
                    file-name-of-first-photo.jpg
                    file-name-of-second-photo.jpg
@@ -112,5 +117,5 @@ If you're not using the `build-gallery` script, the following steps set up every
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-first-photo.jpg`
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-second-photo.jpg`
     * This allows sharing the URL to a specific photo
-1. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
+1. The app will load the `1920` or `3840` version of a photo depending on `window.screen.width` and `window.devicePixelRatio`. The `480` version is always used for thumbnails. It's not the most sophisticated mechanism, but will at least ensure that small mobile screens will only load the HD version and not 4k.
 
