@@ -44,7 +44,7 @@ const initialState = Object.freeze({
 
 class Slideshow extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
-  
+
   // Store wrapped touch event handlers for proper cleanup
   touchStartHandler!: (event: TouchEvent) => void;
   touchMoveHandler!: (event: TouchEvent) => void;
@@ -60,9 +60,13 @@ class Slideshow extends React.PureComponent<Props, State> {
     document.addEventListener('DOMMouseScroll', this.onMouseWheel); // Firefox
 
     // Swipe left/right navigation - store wrapped handlers for proper cleanup
-    this.touchStartHandler = whileZoomedOut(onSingleTouchPoint(this.onTouchStart, this.resetSwiping));
-    this.touchMoveHandler = whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping));
-    
+    this.touchStartHandler = whileZoomedOut(
+      onSingleTouchPoint(this.onTouchStart, this.resetSwiping),
+    );
+    this.touchMoveHandler = whileZoomedOut(
+      onSingleTouchPoint(this.onTouchMove, this.resetSwiping),
+    );
+
     document.addEventListener('touchstart', this.touchStartHandler);
     document.addEventListener('touchmove', this.touchMoveHandler);
     document.addEventListener('touchend', this.onTouchEnd);
