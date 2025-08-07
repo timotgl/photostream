@@ -244,7 +244,7 @@ class Slideshow extends React.PureComponent<Props, State> {
           text={t('Slideshow.albumOverview')}
           className="BackButton"
         />
-        <NavigationHelp hideAfter={config.FADE_IN_DURATION} />
+        <NavigationHelp />
         <Counter
           currentPhotoIndex={currentPhotoIndex}
           showAfter={config.FADE_IN_DURATION}
