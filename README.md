@@ -54,7 +54,30 @@ If you're not using the `build-gallery` script, the following steps set up every
 
 1. Create an `albums` directory inside the `./public` folder.
 1. For each album you'd like to host, create a directory inside `./public/albums`, for example `./public/albums/album1`.
-1. TODO explain how to create `albums.json`.
+1. Create `./public/albums.json` to list all your albums:
+   ```
+   [
+     {
+       "name": "album1",
+       "title": "My First Album",
+       "location": "New York",
+       "date": "January 2024",
+       "file": "thumbnail-image.jpg"
+     },
+     {
+       "name": "album2", 
+       "title": "My Second Album",
+       "location": "Paris",
+       "date": "March 2024",
+       "file": "another-thumbnail.jpg"
+     }
+   ]
+   ```
+   - `name`: Must match the album directory name
+   - `title`: Display name for the album
+   - `location`: Where the photos were taken (optional)
+   - `date`: When the photos were taken (optional)
+   - `file`: Filename of the image to use as album thumbnail
 1. Create a .json file listing the album content: `./public/albums/album1/album.json`.
 1. List your photos in `album.json` by using the following structure:
    ```
