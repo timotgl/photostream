@@ -44,7 +44,7 @@ Create a copy of the file `.env.example` and name it `.env`. Edit it and insert 
 
 The `build-gallery` script automatically processes a directory structure of photos to create a web-ready gallery. It scans the source directory for album subdirectories, processes all images within each album, and generates the necessary metadata files and optimized images for the React app.
 
-The script converts and resizes images to multiple sizes using GraphicsMagick, optimizing them for web delivery with JPEG compression and auto-orientation. For each album, it creates an `album.json` metadata file containing photo information, and generates an `albums.json` file listing all available albums.
+The script converts and resizes images to multiple sizes using GraphicsMagick, supporting a subset of common [image formats that GraphicsMagick can read](http://www.graphicsmagick.org/formats.html) (TIFF, BMP, JPEG, PNG, WebP, HEIC). All images are converted to JPEG with compression for optimal web delivery. For each album, it creates an `album.json` metadata file containing photo information, and generates an `albums.json` file listing all available albums.
 
 Run the script with `npm run build:gallery` after configuring the environment variables as described in the "Configure gallery" section. The source directory should contain subdirectories (one per album) with your original photos, and the destination directory will be populated with the processed gallery structure ready for deployment.
 
