@@ -131,7 +131,7 @@ If you're not using the `build-gallery` script, the following steps set up every
 
 ## Build and deploy
 
-1. Create a production bundle with `npm run build` and deploy the entire content of `./build` to your web host. Note that your photos from `./public/albums` are *copied* into the `./build` directory.
+1. Create a production bundle with `npm run build:app` and deploy the entire content of `./dist` to your web host (not the `dist` dir itself!). Note that your photos from `./public/albums` are *copied* into the `./dist` directory.
 1. The app path is configured via the `VITE_PUBLIC_URL` environment variable as described in the "Configure gallery" section.
 
 
