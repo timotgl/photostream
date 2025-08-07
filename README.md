@@ -108,7 +108,11 @@ If you're not using the `build-gallery` script, the following steps set up every
 ## Build and deploy
 
 1. Create a production bundle with `npm run build` and deploy the entire content of `./build` to your web host. Note that your photos from `./public/albums` are *copied* into the `./build` directory.
-1. The default path for the app is `yourdomaingoeshere.com/photos`, this can be configured in `package.json` (`homepage` property).
+1. The app path is configured via the `VITE_PUBLIC_URL` environment variable as described in the "Configure gallery" section.
+
+
+## Using the React app
+
 1. Loading `http[s]://yourdomaingoeshere.com/photos` will jump into the default album configured in `./src/config.ts`.
 1. Once any album is loaded, you can use a number of ways to cycle through the photos:
     * Arrow keys
