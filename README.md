@@ -120,7 +120,7 @@ If you're not using the `build-gallery` script, the following steps set up every
     * Arrow keys
     * Mouse wheel
     * Clicking or tapping in the left or right half of the page
-    * Swiping left or right with touch gestures
+    * Swiping left or right with touch gestures (swipe navigation is paused when pinch-to-zoom is detected)
 1. The album will update the hash URL if you cycle to another photo. Examples:
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-first-photo.jpg`
     * `http[s]://yourdomaingoeshere.com/photos/#album1/file-name-of-second-photo.jpg`
