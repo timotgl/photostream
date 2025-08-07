@@ -44,6 +44,10 @@ const initialState = Object.freeze({
 
 class Slideshow extends React.PureComponent<Props, State> {
   actionsForKeyDown: StringToFunctionMap = {};
+  
+  // Store wrapped touch event handlers for proper cleanup
+  touchStartHandler!: (event: TouchEvent) => void;
+  touchMoveHandler!: (event: TouchEvent) => void;
 
   state = initialState;
 
@@ -55,22 +59,17 @@ class Slideshow extends React.PureComponent<Props, State> {
     document.addEventListener('mousewheel', this.onMouseWheel); // IE9, Chrome, Safari, Opera
     document.addEventListener('DOMMouseScroll', this.onMouseWheel); // Firefox
 
-    // Swipe left/right navigation
-    document.addEventListener(
-      'touchstart',
-      whileZoomedOut(onSingleTouchPoint(this.onTouchStart, this.resetSwiping)),
-    );
-    document.addEventListener(
-      'touchmove',
-      whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping)),
-    );
+    // Swipe left/right navigation - store wrapped handlers for proper cleanup
+    this.touchStartHandler = whileZoomedOut(onSingleTouchPoint(this.onTouchStart, this.resetSwiping));
+    this.touchMoveHandler = whileZoomedOut(onSingleTouchPoint(this.onTouchMove, this.resetSwiping));
+    
+    document.addEventListener('touchstart', this.touchStartHandler);
+    document.addEventListener('touchmove', this.touchMoveHandler);
     document.addEventListener('touchend', this.onTouchEnd);
     document.addEventListener('touchcancel', this.resetSwiping);
 
     // Click navigation
     document.addEventListener('click', this.onClick);
-
-    // Note: there is no componentWillUnmount or removeEventListener since the entire <App> never unmounts.
   }
 
   componentWillUnmount() {
@@ -78,10 +77,14 @@ class Slideshow extends React.PureComponent<Props, State> {
     document.removeEventListener('mousewheel', this.onMouseWheel);
     document.removeEventListener('DOMMouseScroll', this.onMouseWheel);
 
-    // TODO: Also remove event listeners for 'touchstart' and 'touchmove'.
-
+    // Remove touch event listeners using stored wrapped handlers
+    document.removeEventListener('touchstart', this.touchStartHandler);
+    document.removeEventListener('touchmove', this.touchMoveHandler);
     document.removeEventListener('touchend', this.onTouchEnd);
     document.removeEventListener('touchcancel', this.resetSwiping);
+
+    // Remove click navigation
+    document.removeEventListener('click', this.onClick);
   }
 
   onKeyDown = (keyDownEvent: KeyboardEvent): void => {
