@@ -113,8 +113,10 @@ If you're not using the `build-gallery` script, the following steps set up every
 
 ## Using the React app
 
-1. Loading `http[s]://yourdomaingoeshere.com/photos` will jump into the default album configured in `./src/config.ts`.
-1. Once any album is loaded, you can use a number of ways to cycle through the photos:
+1. Loading `http[s]://yourdomaingoeshere.com/photos` shows an album overview page with thumbnail links to all available albums.
+1. Clicking on an album thumbnail takes you to that album's page, which displays thumbnails of all photos in the album.
+1. Clicking on a photo thumbnail opens the slideshow view for that specific photo.
+1. In the slideshow view, you can use a number of ways to cycle through the photos:
     * Arrow keys
     * Mouse wheel
     * Clicking or tapping in the left or right half of the page
