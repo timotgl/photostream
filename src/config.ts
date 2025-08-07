@@ -43,8 +43,8 @@ const config: Config = {
   ALBUM_ROOT: 'albums',
   ALBUM_DIRECTORY_FILENAME,
   ALBUM_FILENAME,
-  ALBUM_DEFAULT_NAME: 'highlights',
-  FADE_IN_DURATION: 0, // 3000
+  ALBUM_DEFAULT_NAME: 'album1',
+  FADE_IN_DURATION: 3000,
   PHOTO_WIDTH:
     window.screen.width * window.devicePixelRatio >= PHOTO_WIDTH_HD
       ? PHOTO_WIDTH_4K

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHashLocation } from 'wouter/use-hash-location';
 
 import config from '../../config.ts';
-import { PHOTOW_WIDTH_TN, PHOTO_WIDTHS_DESC } from '../../constants.ts';
+import { PHOTO_WIDTH_TN, PHOTO_WIDTHS_DESC } from '../../constants.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import Slideshow from './Slideshow';
@@ -63,7 +63,7 @@ const SlideShowWithHashLocation = () => {
     <Slideshow
       albumName={albumName}
       file={file}
-      maxAvailableWidth={maxAvailableWidth || PHOTOW_WIDTH_TN}
+      maxAvailableWidth={maxAvailableWidth || PHOTO_WIDTH_TN}
       currentPhotoIndex={currentPhotoIndex}
       showNextPhoto={showNextPhoto}
       showPreviousPhoto={showPreviousPhoto}
