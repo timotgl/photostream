@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHashLocation } from 'wouter/use-hash-location';
 
 import config from '../../config.ts';
-import { PHOTO_WIDTH_TN, PHOTO_WIDTHS_DESC } from '../../constants.ts';
+import { PHOTO_WIDTHS_DESC, PHOTO_WIDTH_TN } from '../../constants.ts';
 import useAlbumAndFileHashLocation from '../../hooks/useAlbumAndFileHashLocation.ts';
 import useAlbumContent from '../../store/hooks/useAlbumContent.ts';
 import Slideshow from './Slideshow';
