@@ -3,14 +3,15 @@ import { useEffect, useState } from 'react';
 
 import './Counter.css';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
+import { useNavigationHelpState } from '../../../hooks/useNavigationHelpState.ts';
 import useAlbumStore from '../../../store/useAlbumStore.ts';
 
 interface CounterProps {
   currentPhotoIndex: number;
-  showAfter: number;
 }
 
-const Counter: React.FC<CounterProps> = ({ currentPhotoIndex, showAfter }) => {
+const Counter: React.FC<CounterProps> = ({ currentPhotoIndex }) => {
+  const { fadeInDelay } = useNavigationHelpState();
   const counter = currentPhotoIndex + 1;
   const { albumName } = useAlbumAndFileHashLocation();
   const total = useAlbumStore(
@@ -21,8 +22,8 @@ const Counter: React.FC<CounterProps> = ({ currentPhotoIndex, showAfter }) => {
   useEffect(() => {
     setTimeout(() => {
       setClassName((cn) => `${cn} fadeIn`);
-    }, showAfter);
-  }, [showAfter]);
+    }, fadeInDelay);
+  }, [fadeInDelay]);
   return (
     <div id="counter" className={className}>
       {counter}/{total}

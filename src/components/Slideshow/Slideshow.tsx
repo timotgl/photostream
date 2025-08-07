@@ -245,14 +245,8 @@ class Slideshow extends React.PureComponent<Props, State> {
           className="BackButton"
         />
         <NavigationHelp />
-        <Counter
-          currentPhotoIndex={currentPhotoIndex}
-          showAfter={config.FADE_IN_DURATION}
-        />
-        <PhotoDetails
-          currentPhotoIndex={currentPhotoIndex}
-          showAfter={config.FADE_IN_DURATION}
-        />
+        <Counter currentPhotoIndex={currentPhotoIndex} />
+        <PhotoDetails currentPhotoIndex={currentPhotoIndex} />
       </div>
     );
   }

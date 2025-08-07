@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 
 import './PhotoDetails.css';
 import useAlbumAndFileHashLocation from '../../../hooks/useAlbumAndFileHashLocation.ts';
+import { useNavigationHelpState } from '../../../hooks/useNavigationHelpState.ts';
 import useAlbumStore from '../../../store/useAlbumStore.ts';
 import type { PhotoItem } from '../../../types.ts';
 
 interface PhotoDetailsProps {
   currentPhotoIndex: number;
-  showAfter: number;
 }
 
 const PlaceholderPhotoItem: PhotoItem = {
@@ -20,10 +20,8 @@ const PlaceholderPhotoItem: PhotoItem = {
   width: 0,
 };
 
-const PhotoDetails: React.FC<PhotoDetailsProps> = ({
-  currentPhotoIndex,
-  showAfter,
-}) => {
+const PhotoDetails: React.FC<PhotoDetailsProps> = ({ currentPhotoIndex }) => {
+  const { fadeInDelay } = useNavigationHelpState();
   const { albumName } = useAlbumAndFileHashLocation();
   const { title, location, date, caption } = useAlbumStore((state) => {
     const { content } = state.albumByName[albumName];
@@ -34,8 +32,8 @@ const PhotoDetails: React.FC<PhotoDetailsProps> = ({
   useEffect(() => {
     setTimeout(() => {
       setClassName((cn) => `${cn} fadeIn`);
-    }, showAfter);
-  }, [showAfter]);
+    }, fadeInDelay);
+  }, [fadeInDelay]);
   return (
     <div id="PhotoDetails" className={className}>
       <h1 id="title">{title}</h1>
